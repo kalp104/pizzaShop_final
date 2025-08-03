@@ -1,0 +1,58 @@
+@model PizzaShop.Repository.ModelView.OrderAppWaitingTokenViewModel
+
+@if (Model.customers != null && Model.customers.Any())
+{
+    foreach (var customer in Model.customers)
+    {
+        <div class="data selectedEmail bg-white  p-3 mx-5 mt-3" 
+            data-customer-name="@customer.Customername"
+            data-customer-email="@customer.Customeremail"
+            data-customer-phone="@customer.Customerphone"
+            >
+            <h5>@customer.Customeremail</h5>
+            <div class="d-flex justify-content-between align-items-center">
+                <p>@customer.Customername</p>
+                <span>@customer.Customerphone</span>
+            </div>
+
+        </div>
+    }
+}
+else
+{
+    <div class="data nodata">No data found</div>
+}
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+
+         $('.selectedEmail').hover(function(){
+            $(this).css('background-color', '#f0f0f0');
+         });
+
+        $('.selectedEmail').on('click',function(){
+            var customerName = $(this).data('customer-name');
+            var customerEmail = $(this).data('customer-email');
+            var customerPhone = $(this).data('customer-phone');
+
+            $('#EmailInput').val(customerEmail).focus();
+            $('#NameInput').val(customerName);
+            $('#PhoneInput').val(customerPhone);
+            $("#TotalPersons").focus();
+            
+            $('#EmailInputWaitingToken').val(customerEmail).focus();
+            $('#CustomerNameWaitingToken').val(customerName);
+            $('#CustomerPhoneWaitingToken').val(customerPhone);
+            $("#TotalPersonsCountwaitingToken").focus();
+
+            $('#CustomerEmail').val(customerEmail).focus();
+            $('#CustomerName').val(customerName);
+            $('#CustomerPhone').val(customerPhone);
+            $("#TotalPersonsCount").focus();
+
+
+            $('.customersDetails').addClass('d-none');
+        })
+    });
+</script>

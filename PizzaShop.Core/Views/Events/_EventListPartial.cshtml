@@ -1,0 +1,60 @@
+@using static PizzaShop.Repository.Helpers.Enums
+<div class="pt-4 px-3 d-flex flex-column justify-content-between flex-sm-column flex-md-row flex-wrap">
+    <h3 class="text-blue">Events</h3>
+    <div class="d-flex gap-3 justify-content-end flex-column flex-sm-column flex-md-row flex-wrap">
+        <div class="datesInput d-flex gap-3 justify-content-end">
+            <select class="form-select" aria-label="Order Status" id="orderStatusFilter"
+                asp-items="Html.GetEnumSelectList<EventStatus>()">
+                <option value="">All Status</option>
+            </select>
+
+        </div>
+        <a style="cursor:pointer;"
+            class="text-decoration-none bg-blue d-flex justify-content-center align-items-center p-2 rounded text-white"
+            id="exportBtn">
+            <i class="bi bi-box-arrow-up-right px-1"></i>
+            <span class="spinner-border spinner-border-sm text-white d-none" id="exportLoader" role="status"
+                aria-hidden="true"></span>
+            <span class="spanClass text-white">Export</span>
+        </a>
+        <a style="cursor:pointer;"
+            class="text-decoration-none bg-blue d-flex justify-content-center align-items-center     p-2 rounded text-white"
+            id="AddEventBtn">
+            <i class="bi bi-plus-lg px-1"></i>
+            <span class="spanClass text-white">Add Event</span>
+        </a>
+    </div>
+</div>
+
+<div class="pt-4 px-3 d-flex flex-column justify-content-end flex-sm-column flex-md-row flex-wrap">
+    <div class="gap-3 d-flex flex-column justify-content-end align-items-center flex-sm-column flex-md-row flex-lg-row flex-wrap">
+        <div class="form-floating mb-3">
+            <div class="position-relative bg-white border border-1 rounded">
+                <input type="text" name="" placeholder="Customer name" class="search_bar" id="search_tax">
+                <img src="~/images/search-icon.svg" width="20px" class="search_bar_img">
+            </div>
+        </div>
+        <div class="DatesForm form-floating mb-3">
+            <select class="form-select" aria-label="Date Range" id="dateRangeFilter"
+                asp-items="Html.GetEnumSelectList<EventType>()">
+                <option value="">All Types</option>
+            </select>
+        </div>
+
+        <div class="form-floating mb-3">
+            <input type="date" class="form-control" id="FromDateInput" placeholder="DD-MM-YYYY">
+            <label for="FromDateInput">From Date</label>
+            <span class="text-danger" id="fromDateError"></span>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="date" class="form-control" id="ToDateInput" placeholder="DD-MM-YYYY">
+            <label for="ToDateInput">To Date</label>
+            <span class="text-danger" id="toDateError"></span>
+        </div>
+        <div class="d-flex gap-3">
+            <button type="button" class="btn btn-primary mb-3" style=" width: 50%;" id="searchBtn">Search</button>
+            <button type="button" class="btn border-primary text-primary mb-3 ml-1" style=" width: 50%;"
+                id="clearBtn">Clear</button>
+        </div>
+    </div>
+</div>

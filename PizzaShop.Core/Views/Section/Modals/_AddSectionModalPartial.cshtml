@@ -1,0 +1,36 @@
+@model PizzaShop.Repository.ModelView.SectionsHelperViewModel
+
+<!-- Add Section Modal -->
+<div class="modal fade" id="SectionAddModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+    data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Add Section</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="addSectionForm" method="post" asp-action="AddSection" asp-controller="Section">
+                    <input type="hidden" asp-for="Userid" value="@ViewBag.UserId">
+                    <div class="form-floating mb-3">
+                        <input asp-for="Sectionname" type="text" class="form-control" id="floatingInput"
+                            placeholder="name">
+                        <label for="floatingInput">Name</label>
+                        <span class="text-danger" asp-validation-for="Sectionname"></span>
+                    </div>
+                    <div class="form-floating">
+                        <textarea class="form-control" asp-for="Sectiondescription" placeholder="Leave a comment here"
+                            id="floatingTextarea2" style="height: 100px"></textarea>
+                        <label for="floatingTextarea2">Description</label>
+                        <span class="text-danger" asp-validation-for="Sectiondescription"></span>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                        <button type="button" class="btn border-primary text-primary"
+                            data-bs-dismiss="modal">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

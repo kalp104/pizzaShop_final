@@ -1,0 +1,33 @@
+@model PizzaShop.Repository.ModelView.ItemsModifierViewModel
+
+
+@if (Model.models != null)
+{
+    @foreach (var i in Model.models)
+    {
+        <div class="MGheader d-flex gap-2" data-min-value="@i.MinValue" data-max-value="@i.MaxValue">
+            <h5 class="text-nowrap fw-light">@i.Modifiergroupname Options</h5>
+            <span >(You can choose Minimum - @i.MinValue & Maximum -
+                @i.MaxValue Options)</span>
+        </div>
+        @if (i.Modifiers != null)
+        {
+            <div class="cardContainer">
+                @foreach (var j in i.Modifiers)
+                {
+
+                    <div class="modifiersCard cards border shadow-sm d-flex flex-column position-relative"
+                        data-modifier-id="@j.ModifierId" data-modifier-name="@j.Modifiername" data-modifier-rate="@j.Modifierrate">
+                        <span class="h5 px-3 pt-2">@j.Modifiername</span>
+                        <span class="h6 px-3 ">₹ @j.Modifierrate</span>
+
+
+                        <div class="TypeContainer bg-warning"></div>
+                    </div>
+
+                }
+            </div>
+
+        }
+    }
+}

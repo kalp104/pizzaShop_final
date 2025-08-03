@@ -1,0 +1,192 @@
+@model PizzaShop.Repository.ModelView.MenuWithItemsViewModel
+
+@* <div class="modal fade AddItemBox" id="" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel"></h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form asp-action="AddModifier" asp-controller="Menu" method="post" id="addModifierForm">
+                @Html.AntiForgeryToken()
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-6 mb-3 position-relative">
+                            <button class="btn border border rounded p-3 w-100 d-flex justify-content-between align-items-center"
+                                    type="button" id="toggleModifiersGroupAdd">
+                                Modifier Groups <i class="bi bi-chevron-down"></i>
+                            </button>
+                            <div class="position-absolute shadow-lg modifierGroup-container border rounded bg-white mt-3 p-3"
+                                 id="modifierGroupContainerAdd" style="z-index: 1000; width: -webkit-fill-available; margin-right: 14px;">
+                                @if (Model.modifiergroups != null && Model.modifiergroups.Any())
+                                {
+                                    @foreach (var c in Model.modifiergroups)
+                                    {
+                                        <div class="form-check modifier-group-checkbox">
+                                            <input type="checkbox" class="form-check-input modifier-checkbox" 
+                                                   name="modifiersViewModel.Modifiergroupid" 
+                                                   value="@c.Modifiergroupid" 
+                                                   id="modifiergroup_@c.Modifiergroupid" 
+                                                   data-modifier-group-name="@c.Modifiergroupname"/>
+                                            <label class="form-check-label" for="modifiergroup_@c.Modifiergroupid">
+                                                @c.Modifiergroupname
+                                            </label>
+                                        </div>
+                                    }
+                                }
+                                else
+                                {
+                                    <p>No modifier groups available.</p>
+                                }
+                            </div>
+                            <span asp-validation-for="modifiersViewModel.Modifiergroupid" class="text-danger"></span>
+                        </div>
+                        <div class="col-6 form-floating mb-3">
+                            <input asp-for="modifiersViewModel.Modifiername" type="text" class="form-control"
+                                   placeholder="Enter modifier name"/>
+                            <label>Name</label>
+                            <span asp-validation-for="modifiersViewModel.Modifiername" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4 form-floating mb-3">
+                            <input asp-for="modifiersViewModel.Modifierrate" type="number" class="form-control" placeholder="₹"/>
+                            <label>Rate</label>
+                            <span asp-validation-for="modifiersViewModel.Modifierrate" class="text-danger"></span>
+                        </div>
+                        <div class="col-4 form-floating mb-3">
+                            <input type="number" asp-for="modifiersViewModel.Modifierquantity" class="form-control"
+                                   placeholder="Quantity"/>
+                            <label>Quantity</label>
+                            <span asp-validation-for="modifiersViewModel.Modifierquantity" class="text-danger"></span>
+                        </div>
+                        <div class="col-4 form-floating mb-3">
+                            <select class="form-select" asp-for="modifiersViewModel.Modifierunit">
+                                <option value="0" selected>Select Units</option>
+                                <option value="1">Gram</option>
+                                <option value="2">Kg</option>
+                                <option value="3">Lit</option>
+                                <option value="4">ML</option>
+                                <option value="5">Pieces</option>
+                            </select>
+                            <span asp-validation-for="modifiersViewModel.Modifierunit" class="text-danger"></span>
+                            <label for="floatingSelect">Units</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 form-floating mb-3">
+                            <textarea asp-for="modifiersViewModel.Modifierdescription" class="form-control"
+                                      placeholder="Enter modifier description"></textarea>
+                            <label>Description</label>
+                            <span asp-validation-for="modifiersViewModel.Modifierdescription" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="button" class="btn border-primary text-primary" data-bs-dismiss="modal">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div> *@
+
+
+<div class="modal fade AddItemBox" id="addModifiers" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="AddModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="AddModalLabel">Add Modifier</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form asp-action="AddModifier" asp-controller="Menu" method="post" id="addModifierForm">
+                @Html.AntiForgeryToken()
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-6 mb-3 position-relative">
+                            <button
+                                class="btn border border rounded p-3 w-100 d-flex justify-content-between align-items-center"
+                                type="button" id="toggleModifiersGroupAdd">
+                                Modifier Groups <i class="bi bi-chevron-down"></i>
+                            </button>
+                            <div class="position-absolute shadow-lg modifierGroup-container border rounded bg-white mt-3 p-3"
+                                id="modifierGroupContainerAdd"
+                                style="z-index: 1000; width: -webkit-fill-available; margin-right: 14px;">
+                                @if (Model.modifiergroups != null && Model.modifiergroups.Any())
+                                {
+                                    @foreach (var c in Model.modifiergroups)
+                                    {
+                                        <div class="form-check modifier-group-checkbox">
+                                            <input type="checkbox" class="form-check-input modifier-checkbox"
+                                                name="modifiersViewModel.Modifiergroupid" value="@c.Modifiergroupid"
+                                                id="modifiergroup_@c.Modifiergroupid"
+                                                data-modifier-group-name="@c.Modifiergroupname" />
+                                            <label class="form-check-label" for="modifiergroup_@c.Modifiergroupid">
+                                                @c.Modifiergroupname
+                                            </label>
+                                        </div>
+                                    }
+                                }
+                                else
+                                {
+                                    <p>No modifier groups available.</p>
+                                }
+                            </div>
+                            <span asp-validation-for="modifiersViewModel.Modifiergroupid" class="text-danger modifierNotSelected d-none">Plese select modifier group</span>
+                        </div>
+                        <div class="col-6 form-floating mb-3">
+                            <input asp-for="modifiersViewModel.Modifiername" type="text" class="form-control"
+                                placeholder="Enter modifier name" />
+                            <label>Name</label>
+                            <span asp-validation-for="modifiersViewModel.Modifiername" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4 form-floating mb-3">
+                            <input asp-for="modifiersViewModel.Modifierrate" type="number" class="form-control"
+                                placeholder="₹" />
+                            <label>Rate</label>
+                            <span asp-validation-for="modifiersViewModel.Modifierrate" class="text-danger"></span>
+                        </div>
+                        <div class="col-4 form-floating mb-3">
+                            <input type="number" asp-for="modifiersViewModel.Modifierquantity" class="form-control"
+                                placeholder="Quantity" />
+                            <label>Quantity</label>
+                            <span asp-validation-for="modifiersViewModel.Modifierquantity" class="text-danger"></span>
+                        </div>
+                        <div class="col-4 form-floating mb-3">
+                            <select class="form-select" asp-for="modifiersViewModel.Modifierunit">
+                                <option value="0" selected>Select Units</option>
+                                <option value="1">Gram</option>
+                                <option value="2">Kg</option>
+                                <option value="3">Lit</option>
+                                <option value="4">ML</option>
+                                <option value="5">Pieces</option>
+                            </select>
+                            <span asp-validation-for="modifiersViewModel.Modifierunit" class="text-danger"></span>
+                            <label for="floatingSelect">Units</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 form-floating mb-3">
+                            <textarea asp-for="modifiersViewModel.Modifierdescription" class="form-control"
+                                placeholder="Enter modifier description"></textarea>
+                            <label>Description</label>
+                            <span asp-validation-for="modifiersViewModel.Modifierdescription"
+                                class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="button" class="btn border-primary text-primary"
+                        data-bs-dismiss="modal">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@* <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script> *@

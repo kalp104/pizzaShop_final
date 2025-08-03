@@ -1,0 +1,165 @@
+@model PizzaShop.Repository.ModelView.MenuWithItemsViewModel
+
+<form id="editItemForm" method="post" enctype="multipart/form-data">
+    <input type="hidden" name="__RequestVerificationToken" value="@Html.AntiForgeryToken()" />
+    <div class="modal-header border-0">
+        <h3 class="modal-title fs-5">Edit Menu Item @Model.item.Itemid</h3>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-12 col-md-8">
+                <div class="row">
+                    <div class="col-md-6 col-12 form-floating mb-3">
+                        <select tabindex="-1" id="selectedCategoryForAddItem" class="form-select bg-gray no-focus"
+                            style="pointer-events: none;" asp-for="item.Categoryid">
+                            <option value="">Select Category</option>
+                            @foreach (var c in Model.Categories)
+                            {
+                                <option value="@c.Categoryid"
+                                    selected="@(c.Categoryid == Model.item.Categoryid ? "selected" : null)">
+                                    @c.Categoryname
+                                </option>
+                            }
+                        </select>
+                        <label>Category</label>
+                        <span asp-validation-for="item.Categoryid" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6 col-12 form-floating mb-3">
+                        <input type="text" class="form-control" placeholder="Item Name" asp-for="item.Itemname" />
+                        <label>Item Name</label>
+                        <span asp-validation-for="item.Itemname" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 col-12 form-floating mb-3">
+                        <select class="form-select" asp-for="item.Itemtype">
+                            <option value="0">Select Type</option>
+                            <option value="1" selected="@(Model.item.Itemtype == 1 ? "selected" : null)">Veg</option>
+                            <option value="2" selected="@(Model.item.Itemtype == 2 ? "selected" : null)">Non-Veg
+                            </option>
+                            <option value="3" selected="@(Model.item.Itemtype == 3 ? "selected" : null)">Vegan</option>
+                        </select>
+                        <label>Item Type</label>
+                        <span asp-validation-for="item.Itemtype" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-3 col-12 form-floating mb-3">
+                        <input type="number" class="form-control" placeholder="Rate" asp-for="item.Rate" />
+                        <label>Rate</label>
+                        <span asp-validation-for="item.Rate" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-3 col-12 form-floating mb-3">
+                        <input type="number" step="0.01" class="form-control" placeholder="Quantity"
+                            asp-for="item.Quantity" />
+                        <label>Quantity</label>
+                        <span asp-validation-for="item.Quantity" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-3 col-12 form-floating mb-3">
+                        <select class="form-select" asp-for="item.Units">
+                            <option value="">Select Unit</option>
+                            <option value="1" selected="@(Model.item.Units == 1 ? "selected" : null)">Gram</option>
+                            <option value="2" selected="@(Model.item.Units == 2 ? "selected" : null)">Kg</option>
+                            <option value="3" selected="@(Model.item.Units == 3 ? "selected" : null)">Lit</option>
+                            <option value="4" selected="@(Model.item.Units == 4 ? "selected" : null)">ML</option>
+                            <option value="5" selected="@(Model.item.Units == 5 ? "selected" : null)">Pieces</option>
+                        </select>
+                        <label>Unit</label>
+                        <span asp-validation-for="item.Units" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div
+                        class="col-md-3 col-12 form-check form-switch d-flex justify-content-center align-items-center pb-3">
+                        <div class="m-2">1</div>
+                        <input class="form-check-input me-2" type="checkbox" asp-for="item.Isavailable" />
+                        <label>Available</label>
+                    </div>
+                    <div
+                        class="col-md-3 col-12 form-check form-switch d-flex justify-content-center align-items-center pb-3">
+                        <input class="form-check-input me-2" type="checkbox" asp-for="item.Defaulttax" />
+                        <label>Default Tax</label>
+                    </div>
+                    <div class="col-md-3 col-12 form-floating mb-3">
+                        <input type="number" step="0.01" class="form-control" placeholder="Tax %"
+                            asp-for="item.Taxpercentage" />
+                        <label>Tax %</label>
+                        <span asp-validation-for="item.Taxpercentage" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-3 col-12 form-floating mb-3">
+                        <input type="text" class="form-control" asp-for="item.Shortcode" placeholder="Short Code" />
+                        <label>Short Code</label>
+                        <span asp-validation-for="item.Shortcode" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class=" col-12 form-floating mb-3">
+                        <input type="text" class="form-control" asp-for="item.Description"
+                            placeholder="Item Description" />
+                        <label>Description</label>
+                        <span asp-validation-for="item.Description" class="text-danger"></span>
+                    </div>
+                </div>
+                <input type="hidden" asp-for="Userid" value="@ViewBag.UserId" />
+                <div class="row">
+                    <label class="mb-1">Upload Image</label>
+                    <div class="col-12 position-relative p-3 mb-1">
+                        <div class="file-upload">
+                            <input class="col drag-area form-control" asp-for="item.UploadFiles" type="file"
+                                id="imageInputEdit" accept="image/*" />
+                            <div class="d-flex flex-column justify-content-center align-items-center w-100">
+                                <span class="display-4"><i class="bi bi-cloud-arrow-down"></i></span>
+                                <span>Browse Files
+                                    <span id="fileNameDisplayEditITem" class="text-success mt-2"></span>
+                                    <span id="fileExisitDisplayEditITem" class="text-success">
+                                        Existing File: @(string.IsNullOrEmpty(Model.item.ImageUrl) ? "not Available" :
+                                        Model.item.ImageUrl.Substring(7))
+                                    </span>
+                                    <span asp-validation-for="item.UploadFiles" class="text-danger"></span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4">
+                <div class="col-12 modifier-Group d-flex flex-column"
+                    style="background-color: #f5dd8d59; height: 100%;">
+                    <div class="modifier-section d-flex flex-column">
+                        <button class="btn bg-white mx-3 my-3 d-flex justify-content-between align-items-center"
+                            type="button" id="toggleModifiersEdit">
+                            Select Modifier Group(s) <span><i class="bi bi-chevron-down"></i></span>
+                        </button>
+                        <div class="modifier-container bg-white mx-3 mx-1" id="modifierContainerEdit"
+                            style="display: none;">
+                            @if (Model.modifiergroups != null)
+                            {
+                                foreach (var i in Model.modifiergroups)
+                                {
+                                    <div class="modifier-group-item d-flex align-items-center px-4 gap-3">
+                                        <input type="checkbox" class="modifier-checkbox-edit"
+                                            data-modifiergroup-id="@i.Modifiergroupid">
+                                        <span>@i.Modifiergroupname</span>
+                                    </div>
+                                }
+                            }
+                            else
+                            {
+                                <span class="alert alert-info p-2 d-block">No modifier groups found</span>
+                            }
+                        </div>
+                    </div>
+                    <div id="modifiers-container-edit" class="mt-2" style="max-height: 400px; overflow-y: auto;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <input type="hidden" asp-for="selectedModifierGroups" id="selectedModifierGroupsEdit" />
+    <div class="modal-footer border-0 justify-content-end">
+        <input type="hidden" asp-for="item.Itemid" />
+        <button type="submit" class="btn btn-primary" id="saveItemButton">Save</button>
+        <a class="btn border-primary text-primary" data-bs-dismiss="modal">Cancel</a>
+    </div>
+</form>
+
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>

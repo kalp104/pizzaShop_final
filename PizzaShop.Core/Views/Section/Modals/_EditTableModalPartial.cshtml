@@ -1,0 +1,55 @@
+@model PizzaShop.Repository.ModelView.SectionsHelperViewModel
+
+<!-- Edit Table Modal -->
+<div class="modal fade" id="editTableModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+    data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Table</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editTableForm" method="post" asp-action="EditTable" asp-controller="Section">
+                    <input type="hidden" asp-for="Userid" value="@ViewBag.UserId">
+                    <input type="hidden" asp-for="Tableid" id="TableId" value="">
+                    <div class="row mx-2">
+                        <div class="col-6 form-floating mb-3">
+                            <input asp-for="Tablename" type="text" class="form-control" id="Tablename"
+                                placeholder="name" value="">
+                            <label for="floatingInput" class="mx-2">Name</label>
+                            <span class="text-danger" asp-validation-for="Tablename"></span>
+                        </div>
+                        <div class="col-6 form-floating mb-3">
+                            <input type="hidden" asp-for="Sectionid" value="" id="sectionIdAtEditTable">
+                            <input asp-for="SectionnameTableHelper" type="text" class="form-control"
+                                id="sectionNameAtEditTable" placeholder="" disabled value="">
+                            <label for="floatingSelect" class="mx-2">Select Section</label>
+                        </div>
+                    </div>
+                    <div class="row mx-2">
+                        <div class="col-6 form-floating mb-3">
+                            <input asp-for="Capacity" type="text" class="form-control" id="Capacity"
+                                placeholder="capacity" value="">
+                            <label for="floatingInput" class="mx-2">Capacity</label>
+                            <span class="text-danger" asp-validation-for="Capacity"></span>
+                        </div>
+                        <div class="col-6 form-floating mb-3">
+                            <select style="pointer-events: none;" class="form-select bg-gray no-focus" asp-for="Status" id="Status" aria-label="Status">
+                                <option value="1">Available</option>
+                                <option value="2">Occupied</option>
+                            </select>
+                            <span asp-validation-for="Status" class="text-danger"></span>
+                            <label for="floatingSelect" class="mx-2">Status</label>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                        <button type="button" class="btn border-primary text-primary"
+                            data-bs-dismiss="modal">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,37 @@
+@model PizzaShop.Repository.ModelView.SectionsHelperViewModel
+
+<!-- Edit Section Modal -->
+<div class="modal fade" id="editSectionModal" tabindex="-1" data-bs-backdrop="static"
+    aria-labelledby="editCategoryLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5">Edit Section</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editSectionForm" method="post" asp-action="EditSection" asp-controller="Section">
+                    <div class="form-floating mb-3 mx-3">
+                        <input type="text" class="form-control" id="editSectionName" asp-for="Sectionname"
+                            placeholder="Section Name">
+                        <label>Section</label>
+                        <span class="text-danger" asp-validation-for="Sectionname"></span>
+                    </div>
+                    <div class="form-floating mb-3 mx-3">
+                        <textarea class="form-control" id="editSectionDescription" asp-for="Sectiondescription"
+                            placeholder="Description" style="height: 100px; resize: none;"></textarea>
+                        <label>Description</label>
+                        <span class="text-danger" asp-validation-for="Sectiondescription"></span>
+                    </div>
+                    <input type="hidden" id="editSectionId" asp-for="Sectionid">
+                    <input type="hidden" name="Userid" value="@ViewBag.UserId">
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                        <button type="button" class="btn border-primary text-primary"
+                            data-bs-dismiss="modal">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

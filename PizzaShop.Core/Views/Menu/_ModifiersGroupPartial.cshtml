@@ -1,0 +1,335 @@
+@model PizzaShop.Repository.ModelView.MenuWithItemsViewModel
+@{
+    bool canEdit = ViewBag.permission[2].Canedit;
+    bool canDelete = ViewBag.permission[2].Candelete;
+}
+
+
+
+<Aside class="rightsideborder sideBar border-right-primary rounded p-3">
+    <div class="logoheader">
+        <h4 class="text-primary d-flex justify-content-between align-items-center">
+            <a class="text-decoration-none text-primary modifierGroupPartialAll">Modifiers Group</a>
+            @if (canEdit)
+            {
+                <a type="button" class="text-decoration-none bg-light px-1 border border-2 rounded border-primary"
+                    data-bs-toggle="modal" id="AddmodifierGroupModal">
+                    <img src="~/images/icons/plus-solid.svg" alt="" class="" height="20px">
+                </a>
+            }
+        </h4>
+    </div>
+    <ul>
+        <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+            @if (Model.modifiergroups != null)
+            {
+                <ul id="modifierGroup-list">
+                @foreach (var modifier in Model.modifiergroups)
+                {
+                    @* <li class="nav-link links modifierGroup-link d-flex justify-content-between align-items-center gap-2 @(ViewBag.SelectedModifierId == modifier.Modifiergroupid ? "active" : "")"
+                        id="v-pills-@modifier.Modifiergroupid-tab" data-modifier-group-id="@modifier.Modifiergroupid"
+                        data-modifier-group-name="@modifier.Modifiergroupname"
+                        data-modifier-group-description="@modifier.Modifiergroupdescription">
+                        <a
+                            class="text-decoration-none @(ViewBag.SelectedModifierId == modifier.Modifiergroupid ? "text-white" : "text-dark")">
+                            <i class="bi bi-grid-3x2-gap-fill me-2"></i>@modifier.Modifiergroupname
+                        </a>
+                        <div class="activePens d-none">
+                            @if (canEdit)
+                            {
+                                <a href="#" class="text-primary edit-modifier-group" data-bs-toggle="modal"
+                                    data-bs-target="#editModal" data-id="@modifier.Modifiergroupid">
+                                    <i class="bi bi-pen mx-1"></i>
+                                </a>
+                            }
+                            @if (canDelete)
+                            {
+                                <a href="#" class="text-primary delete-modifier-group-btn"
+                                    data-modifier-group-id="@modifier.Modifiergroupid">
+                                    <i class="bi bi-trash"></i>
+                                </a>
+                            }
+                        </div>
+                    </li> *@
+                }
+                </ul>
+            }else{
+                <div class="text-center" id="no-modifierGroup">
+                    <p>No modifier groups available.</p>
+                </div>
+            }
+        </div>
+    </ul>
+</Aside>
+
+<div class="p-3 w-100">
+    <h5>Modifiers</h5>
+    <div class="tab-content" id="v-pills-tabContent">
+        <div class="tab-pane fade show active" id="" role="tabpanel" aria-labelledby="v-pills-sandwich-tab"
+            tabindex="0">
+            <div class="d-flex justify-content-end">
+                <div class="position-relative bg-white mx-2 border border-1 rounded">
+                    <input type="text" id="searchInputModifierGroup" placeholder="Search" class="search_bar">
+                    <img src="~/images/search-icon.svg" width="20px" class="search_bar_img">
+                </div>
+                @if (canDelete)
+                {
+                    <button class="btn-light border p-2 ms-2" id="deleteModifiers" disabled>
+                        <i class="bi bi-trash"></i>
+                    </button>
+                }
+                @if (canEdit)
+                {
+                    <a href="#" id="addModifiersModal"
+                        class="btn btn-primary text-decoration-none mx-2 d-flex justify-content-center align-items-center p-2 rounded text-white">+
+                        <span class="spanClass text-white" id="buttonContent">New Modifier</span>
+                    </a>
+                }
+            </div>
+            <div id="collapse2" class="tabularData">
+                <partial name="_ModifiersPartial" model="Model" />
+            </div>
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-end align-items-center d-lg-flex d-sm-flex gap-2">
+                    <div class="d-flex align-items-center mb-2 mt-2">
+                        <span>Items per page: </span>
+                        <div class="custom-dropdown">
+                            <button class="btn border" type="button" id="itemsPerPageBtnMain">
+                                5 <span><i class="bi bi-chevron-down"></i></span>
+                            </button>
+                            <div class="custom-dropdown-menu" id="itemsPerPageMenuMain" style="display: none;">
+                                <div class="page-size-option" data-size="5">5</div>
+                                <div class="page-size-option" data-size="10">10</div>
+                                <div class="page-size-option" data-size="15">15</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center mb-2 mt-2">
+                        <span id="pagination-info-main">Showing 1-5 of 5</span>
+                        <li class="page-item">
+                            <a class="page-link prev-page mx-2" href="#" id="prevPageMain">
+                                < </a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link next-page" href="#" id="nextPageMain">></a>
+                        </li>
+                    </div>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Modifier Group Modal (Placeholder) -->
+<div class="modal fade" id="editModfierGroupModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">hii</div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Understood</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Modifier Group Modal -->
+<div class="modal fade" id="delteModifierGroupModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Delete Modifier</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post" id="DeleteModifierGroupForm">
+                    <div class="modal-body d-flex flex-column justify-content-center align-items-center">
+                        <img src="~/images/toppng.com-warning-icon-2400x2400.png" height="40px" width="40px">
+                        <div>Are you sure you want to delete this modifier Group?</div>
+                    </div>
+                    <input type="hidden" asp-for="Userid" value="@ViewBag.UserId">
+                    <input type="hidden" id="deleteModifierGroupId" asp-for="Modifiergroupid" value="">
+                    <div class="modal-footer d-flex-col justify-content-center">
+                        <button type="submit" class="btn btn-primary">Yes</button>
+                        <button type="button" class="btn border-primary text-primary"
+                            data-bs-dismiss="modal">No</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Multi Delete Modifiers Modal -->
+<div class="modal fade" id="exampleModal4" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Delete Modifiers</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post" asp-action="DeleteMultipleModifiers" asp-controller="Menu"
+                    id="deleteMultipleModifiersForm">
+                    <div class="modal-body d-flex flex-column justify-content-center align-items-center">
+                        <img src="~/images/toppng.com-warning-icon-2400x2400.png" height="40px" width="40px">
+                        <div>Are you sure you want to delete the selected modifiers?</div>
+                        <input type="hidden" name="selectedModifierIds" id="selectedModifierIds" value="" />
+                    </div>
+                    <div class="modal-footer d-flex justify-content-center">
+                        <button type="submit" class="btn btn-primary">Yes</button>
+                        <button type="button" class="btn border-primary text-primary"
+                            data-bs-dismiss="modal">No</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Single Modifier Modal -->
+<div class="modal fade" id="staticBackdrop1-Modifier" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Delete Confirmation</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="post" id="deleteSingleModifierForm">
+                <div class="modal-body d-flex flex-column justify-content-center align-items-center">
+                    <img src="~/images/toppng.com-warning-icon-2400x2400.png" height="40px" width="40px">
+                    <div>Are you sure you want to delete this modifier?</div>
+                </div>
+                <input type="hidden" asp-for="Userid" value="@ViewBag.Userid" />
+                <input type="hidden" name="modifierid" id="deleteModifierId" value="" />
+                <div class="modal-footer d-flex-col justify-content-center">
+                    <button type="submit" data-id="modiferid" class="btn btn-primary">Yes</button>
+                    <button type="button" class="btn border-primary text-primary" data-bs-dismiss="modal">No</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Modifiers Modal -->
+<div class="modal fade AddItemBox" id="editModal-Modifier" data-bs-backdrop="static" data-bs-keyboard="false"
+    tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="editModalLabel">Edit Modifier</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="editModifierForm" method="post">
+                @Html.AntiForgeryToken()
+                <input type="hidden" asp-for="modifiersViewModel.Modifierid" id="editModifierId" />
+                <input type="hidden" name="Userid" value="@ViewBag.Userid" />
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-6 mb-3 position-relative">
+                            <button
+                                class="btn border border rounded p-3 w-100 d-flex justify-content-between align-items-center"
+                                type="button" id="toggleModifiersGroupEdit">
+                                <span id="selectedModifierGroupsText">Modifier Groups</span>
+                                <i class="bi bi-chevron-down"></i>
+                            </button>
+                            <div class="checkbox-container position-absolute shadow-lg modifierGroup-container border rounded bg-white mt-3 p-3"
+                                id="modifierGroupContainerEdit"
+                                style="z-index: 1000; width: -webkit-fill-available; margin-right: 14px;">
+                                @if (Model.modifiergroups != null && Model.modifiergroups.Any())
+                                {
+                                    @foreach (var c in Model.modifiergroups)
+                                    {
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input"
+                                                name="modifiersViewModel.Modifiergroupid" value="@c.Modifiergroupid"
+                                                id="modifiergroup_@c.Modifiergroupid" data-group-name="@c.Modifiergroupname" />
+                                            <label class="form-check-label" for="modifiergroup_@c.Modifiergroupid">
+                                                @c.Modifiergroupname
+                                            </label>
+                                        </div>
+                                    }
+                                }
+                                else
+                                {
+                                    <p>No modifier groups available.</p>
+                                }
+                            </div>
+                            <span asp-validation-for="modifiersViewModel.Modifiergroupid" class="text-danger"></span>
+                            <span class="text-danger modifierNotSelectedAtEdit d-none">Plese select modifier group</span>
+
+                        </div>
+                        <div class="col-6 form-floating mb-3">
+                            <input asp-for="modifiersViewModel.Modifiername" id="editModifierName" type="text"
+                                class="form-control" placeholder="Enter modifier name" />
+                            <label for="editModifierName">Name</label>
+                            <span asp-validation-for="modifiersViewModel.Modifiername" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4 form-floating mb-3">
+                            <input asp-for="modifiersViewModel.Modifierrate" id="editModifierRate" type="number"
+                                class="form-control" placeholder="₹" />
+                            <label for="editModifierRate">Rate</label>
+                            <span asp-validation-for="modifiersViewModel.Modifierrate" class="text-danger"></span>
+                        </div>
+                        <div class="col-4 form-floating mb-3">
+                            <input type="number" asp-for="modifiersViewModel.Modifierquantity" id="editModifierQuantity"
+                                class="form-control" placeholder="Quantity" />
+                            <label for="editModifierQuantity">Quantity</label>
+                            <span asp-validation-for="modifiersViewModel.Modifierquantity" class="text-danger"></span>
+                        </div>
+                        <div class="col-4 form-floating mb-3">
+                            <select class="form-select" asp-for="modifiersViewModel.Modifierunit" id="editModifierUnit">
+                                <option value="0">Select Units</option>
+                                <option value="1">Gram</option>
+                                <option value="2">Kg</option>
+                                <option value="3">Lit</option>
+                                <option value="4">ML</option>
+                                <option value="5">Pieces</option>
+                            </select>
+                            <span asp-validation-for="modifiersViewModel.Modifierunit" class="text-danger"></span>
+                            <label for="editModifierUnit">Units</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 form-floating mb-3">
+                            <textarea asp-for="modifiersViewModel.Modifierdescription" id="editModifierDescription"
+                                class="form-control" placeholder="Enter modifier description"></textarea>
+                            <label for="editModifierDescription">Description</label>
+                            <span asp-validation-for="modifiersViewModel.Modifierdescription"
+                                class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="button" class="btn border-primary text-primary"
+                        data-bs-dismiss="modal">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<partial name="_AddModifierGroupPartial" model="Model" />
+<partial name="_AddModifiersModalPartial" model="Model" />
+<partial name="_EditModifierGroupPartial" model="Model" />
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="~/js/modifier-group_script.js"></script>
+
+<script>
+    window.totalItemsMain = @Model.TotalItems1 || 0;
+    window.filterModifiersUrl = '@Url.Action("FilterModifiers", "Menu")';
+
+    window.canEdit = @Json.Serialize(ViewBag.permission[2].Canedit);
+    window.canDelete = @Json.Serialize(ViewBag.permission[2].Candelete);
+</script>

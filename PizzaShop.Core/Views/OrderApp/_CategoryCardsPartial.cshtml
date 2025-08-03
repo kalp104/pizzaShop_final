@@ -1,0 +1,36 @@
+@model PizzaShop.Repository.ModelView.OrderAppMenuViewModel
+
+
+@if (Model.items != null && Model.items.Any() )
+{
+    @foreach (var i in Model.items)
+    {
+        <div class="itemCards cards border shadow-sm d-flex" data-item-id="@i.Itemid" data-item-name="@i.Itemname">
+            <div class="cardImg d-flex justify-content-center align-items-center">
+                <img src="@i.Imageid" height="65" width="65" alt="item" class=" rounded-circle">
+            </div>
+            <div class="">
+                @{var name = i.Itemname.Length > 18 ? i.Itemname.Substring(0,18)+"..." : i.Itemname;}
+                <h5 class="m-2 pe-3">@name</h5>
+                <h6 class="m-2 itemRate" data-Rate="@i.Rate">₹@i.Rate</h6>
+                <div class="FavouriteContainer" id="favouriteBtn" data-item-id="@i.Itemid" data-favourite="@i.Favourite">
+                       
+                    @if (@i.Favourite == false)
+                    {
+                        <i class="bi bi-heart text-danger "></i>
+                    }
+                    else
+                    {
+                        <i class="bi bi-heart-fill text-danger "></i>
+                    }
+                </div>
+            </div>
+
+            <div class="TypeContainer @(i.Itemtype == 1 ? "bg-success" : i.Itemtype == 2 ? "bg-danger" : "bg-warning")"></div>
+
+        </div>
+    }
+} 
+else {
+    <div class="h6">Modifiers Not Found</div>
+}

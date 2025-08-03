@@ -1,0 +1,87 @@
+@using static PizzaShop.Repository.Helpers.Enums
+@model PizzaShop.Repository.ModelView.TaxHelperViewModel;
+@{
+    bool canEdit = ViewBag.permission[4].Canedit;
+    bool canDelete = ViewBag.permission[4].Candelete;
+
+}
+
+
+<div class="p-2" id="TableContainer">
+    @if (Model.TaxHelpers != null && Model.TaxHelpers.Any())
+    {
+        <table class="table text-nowrap ">
+            <thead>
+                <tr>
+                    <th class="">Name</th>
+                    <th class="text-center">Type</th>
+                    <th class="text-center">IsEnabled</th>
+                    <th class="text-center ">Default</th>
+                    <th class="text-center ">Tax Value</th>
+                    <th class="text-center ">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var i in Model.TaxHelpers)
+                {
+                    <tr>
+                        <td class="">
+                            @i.Taxname
+                        </td>
+                        <td class="text-center">
+                           @((TaxTypes)i.Taxtype)
+                        </td>
+                        <td class="text-center ">
+                            <div class="form-check form-switch text-center d-flex justify-content-center ">
+                                <input class="form-check-input me-2"  role="switch" type="checkbox" @(i.Isenabled != false ? "checked" : "") disabled/>
+                            </div>
+                        </td>
+                        <td class="text-center ">
+                            <div class="form-check form-switch text-center  d-flex justify-content-center">
+                                <input class="form-check-input me-2"  role="switch" type="checkbox" @(i.Isdefault != false ? "checked" : "") disabled/>
+                            </div>
+                        </td>
+                        <td class="text-center ">
+                            @if(i.Taxtype == 1)
+                            {
+                                @i.Taxamount@:%
+                            }
+                            else
+                            {
+                                @:₹@i.Taxamount 
+                            }
+                        </td>
+
+                        <td class="text-center ">
+                            @if (canEdit == true)
+                            {
+                                <a class="edit-Tax-link m-2 text-decoration-none"
+                                    data-tax-id="@i.Taxid"
+                                    data-tax-name="@i.Taxname"
+                                    data-tax-type="@i.Taxtype"
+                                    data-tax-isenabled="@i.Isenabled"
+                                    data-tax-isdefault="@i.Isdefault"
+                                    data-tax-value="@i.Taxamount"
+                                >
+                                    <i class="bi bi-pen"></i>
+                                </a>
+                            }
+                            @if (canDelete == true)
+                            {
+                                <a href="#"  data-tax-id="@i.Taxid"
+                                    class="delete-Tax-link">
+                                    <i class="bi bi-trash"></i>
+                                </a>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <div class="d-flex align-items-center justify-content-center">No Tax Found</div>
+    }
+</div>

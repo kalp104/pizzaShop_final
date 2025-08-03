@@ -1,0 +1,179 @@
+@model PizzaShop.Repository.ModelView.MenuWithItemsViewModel
+
+<div class="modal fade AddItemBox" id="addItem" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+    data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header border-0">
+                <h3 class="modal-title fs-5" id="exampleModalLabel">Add Menu Item</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form  id="addItemForm"  method="post"
+                    enctype="multipart/form-data">
+                    <input type="hidden" name="__RequestVerificationToken" value="@Html.AntiForgeryToken()" />
+                    <div class="row">
+                        <div class="col-12 col-md-8">
+                            <div class="row">
+                                <div class="col-md-6 col-12 form-floating mb-3">
+                                    <select tabindex="-1" id="selectedCategoryForAddItem" class="form-select bg-gray no-focus" style="pointer-events: none;" asp-for="item.Categoryid">
+                                        <option value="">Select Category</option>
+                                        @if (Model.Categories != null)
+                                        {
+                                            @foreach (var c in Model.Categories)
+                                            {
+                                                <option value="@c.Categoryid">@c.Categoryname</option>
+                                            }
+                                        }
+                                    </select>
+                                    <label>Category</label>
+                                    <span asp-validation-for="item.Categoryid" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-6 col-12 form-floating mb-3">
+                                    <input type="text" class="form-control" asp-for="item.Itemname"
+                                        placeholder="Item name" />
+                                    <label>Item Name</label>
+                                    <span asp-validation-for="item.Itemname" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3 col-12 form-floating mb-3">
+                                    <select class="form-select" asp-for="item.Itemtype">
+                                        <option value="0">Select Type</option>
+                                        <option value="1">Veg</option>
+                                        <option value="2">Non-veg</option>
+                                        <option value="3">Vegan</option>
+                                    </select>
+                                    <label>Item Type</label>
+                                    <span asp-validation-for="item.Itemtype" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-3 col-12 form-floating mb-3">
+                                    <input type="number" step="0.01" class="form-control" asp-for="item.Rate"
+                                        placeholder="₹" />
+                                    <label>Rate</label>
+                                    <span asp-validation-for="item.Rate" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-3 col-12 form-floating mb-3">
+                                    <input type="number" step="0.01" class="form-control" asp-for="item.Quantity"
+                                        placeholder="quantity" />
+                                    <label>Quantity</label>
+                                    <span asp-validation-for="item.Quantity" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-3 col-12 form-floating mb-3">
+                                    <select class="form-select" asp-for="item.Units">
+                                        <option value="">Select Unit</option>
+                                        <option value="1">Gram</option>
+                                        <option value="2">Kg</option>
+                                        <option value="3">Lit</option>
+                                        <option value="4">ML</option>
+                                        <option value="5">Pieces</option>
+                                    </select>
+                                    <label>Unit</label>
+                                    <span asp-validation-for="item.Units" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div
+                                    class="col-md-3 col-12 form-check form-switch d-flex justify-content-center align-items-center pb-3">
+                                    <div class="m-1">1</div>
+                                    <input class="form-check-input me-2" type="checkbox" name="item.Isavailable"
+                                        value="true" @(Model?.item?.Isavailable == true ? "checked" : "") />
+                                    <input type="hidden" name="item.Isavailable" value="false" />
+                                    <label>Available</label>
+                                </div>
+                                <div
+                                    class="col-md-3 col-12 form-check form-switch d-flex justify-content-center align-items-center pb-3">
+                                    <div class="m-1">1</div>
+                                    <input class="form-check-input me-2" type="checkbox" name="item.Defaulttax"
+                                        value="true" @(Model?.item?.Defaulttax == true ? "checked" : "") />
+                                    <input type="hidden" name="item.DefaulttaxEnabled" value="false" />
+                                    <label>Default Tax</label>
+                                </div>
+                                <div class="col-md-3 col-12 form-floating mb-3">
+                                    <input type="number" step="0.01" class="form-control" asp-for="item.Taxpercentage"
+                                        placeholder="%" />
+                                    <label>Tax %</label>
+                                    <span asp-validation-for="item.Taxpercentage" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-3 col-12 form-floating mb-3">
+                                    <input type="text" class="form-control" asp-for="item.Shortcode"
+                                        placeholder="#code" />
+                                    <label>Short Code</label>
+                                    <span asp-validation-for="item.Shortcode" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 form-floating mb-3">
+                                    <textarea class="form-control" asp-for="item.Description"
+                                        placeholder="enter item's description"></textarea>
+                                    <label>Description</label>
+                                    <span asp-validation-for="item.Description" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="mb-1">Upload Image</label>
+                                <div class="col-12 position-relative p-3 mb-1">
+                                    <div class="file-upload">
+                                        <input class="col drag-area form-control" asp-for="item.UploadFiles" type="file"
+                                            id="imageInputAdd" accept="image/*" />
+                                        <div class="d-flex flex-column justify-content-center align-items-center w-100">
+                                            <span class="display-4"><i class="bi bi-cloud-arrow-down"></i></span>
+                                            <span>Browse Files
+                                                <span class="AddedImageURL text-success"></span>
+                                                <span asp-validation-for="item.UploadFiles" class="text-danger"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <div class="col-12 modifier-Group" style="background-color: #f5dd8d59; height: 100%;">
+                                <div class="mt-1 p-3">
+                                    <button
+                                        class="btn btn-light w-100 d-flex justify-content-between align-items-center"
+                                        type="button" id="toggleModifiersAdd">
+                                        Select Modifier Group(s) <i class="bi bi-chevron-down"></i>
+                                    </button>
+                                    <div class="modifier-container bg-white mt-3 p-3" id="modifierContainerAdd"
+                                        style="display: none;">
+                                        @if (Model.modifiergroups != null && Model.modifiergroups.Any())
+                                        {
+                                            @foreach (var i in Model.modifiergroups)
+                                            {
+                                                <div class="modifier-group-item d-flex align-items-center gap-2 "
+                                                    data-modifiergroup-id="@i.Modifiergroupid">
+                                                    <input type="checkbox" class="me-2 modifier-checkbox-add"
+                                                        data-modifiergroup-id="@i.Modifiergroupid">
+                                                    <span>@i.Modifiergroupname</span>
+                                                </div>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <div class="alert alert-info p-2">No modifier groups found</div>
+                                        }
+                                    </div>
+                                </div>
+                                <div id="modifiers-container-add" class="mt-2"
+                                    style="max-height: 400px; overflow-y: auto;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" name="SelectedModifierGroups" id="selectedModifierGroupsAdd" />
+                    <div class="modal-footer border-0 justify-content-end">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                        <a class="btn border-primary text-primary" data-bs-dismiss="modal">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@* <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js"></script>
+
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script> *@
+

@@ -1,0 +1,44 @@
+@{
+    Layout = "~/Views/Shared/_Dashboard.cshtml";
+}
+@model IEnumerable<PizzaShop.Repository.Models.Role>
+<div class="py-4 px-3  d-flex justify-content-between">
+    <h3 class="text-blue">Role & Permissions</h3>
+</div>
+<div class="p-4 mx-3 row">
+
+    <div class="bg-white border rounded col-12 col-sm-8 col-lg-6">
+
+
+        <div class="p-2 ">
+            <table class="table ">
+                <thead >
+
+                    <th >Role</th>
+                    <th class="text-end ">Action</th>
+
+                </thead>
+                <tbody>
+                    @foreach (var role in Model)
+                    {
+                        <tr class="">
+                            <td>@role.Rolename</td>
+                            <td class="text-end">
+                                <a asp-action="Permission" asp-controller="Role" asp-route-id="@role.Roleid"><i class="bi bi-pen"></i></a>
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    var ErrorPermission = '';
+    if (ErrorPermission) {
+        toastr.error(ErrorPermission, 'Error', { timeOut: 3000 });
+    }
+</script>

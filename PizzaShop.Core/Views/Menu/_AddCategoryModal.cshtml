@@ -1,0 +1,40 @@
+@* Views/Shared/_AddCategoryModal.cshtml *@
+@model PizzaShop.Repository.ModelView.MenuWithItemsViewModel
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+    data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Add Category</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="AddCategoryForm" method="post">
+                    <input type="hidden" asp-for="Userid" value="@ViewBag.UserId">
+                    <div class="form-floating mb-3 mx-3">
+                        <input asp-for="CategoryName" type="text" class="form-control" id="floatingInput"
+                            placeholder="name">
+                        <label for="floatingInput">name</label>
+                        <span class="text-danger" asp-validation-for="CategoryName"></span>
+                    </div>
+                    <div class="form-floating mx-3">
+                        <textarea class="form-control" asp-for="CategoryDescription" placeholder="Leave a comment here"
+                            id="floatingTextarea2" style="height: 100px"></textarea>
+                        <label for="floatingTextarea2">Description</label>
+                        <span class="text-danger" asp-validation-for="CategoryDescription"></span>
+                    </div>
+                    <div class="modal-footer d-flex justify-content-end">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                        <button type="button" class="btn border-primary text-primary" data-bs-dismiss="modal">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@* <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script> *@

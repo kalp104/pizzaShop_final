@@ -1,0 +1,93 @@
+@model PizzaShop.Repository.ModelView.OrderAppKOTViewModel
+
+
+@if (Model.orderKOT != null && Model.orderKOT.Any())
+{
+    @foreach (var i in Model.orderKOT)
+    {
+
+        <div class="card cardContainerKOT overflow-auto">
+            <div class="card-header ">
+                <div class="d-flex justify-content-between">
+                    <span class="text-primary"># @i.orderId</span>
+                    <span><i class="bi bi-stopwatch"></i>
+                        @if (i.itemsKOT?.Any() == true)
+                        {
+                            @i.itemsKOT.First().timeSpend
+                        }
+                        else
+                        {
+                            <span>No DateTime Available</span>
+                        }
+                    </span>
+                </div>
+                <div>
+                    <span>@i.sectionName</span>
+                    <span><i class="bi bi-dot"></i> </span>
+                    @if (i.table != null && i.table.Any())
+                    {
+                        @foreach (var t in i.table)
+                        {
+                            @t.Tablename
+                        }
+                    }
+                </div>
+
+
+            </div>
+            <div class="card-body cardBodyKOT">
+                
+                @if (i.itemsKOT != null && i.itemsKOT.Any())
+                {
+                    @foreach (var t in i.itemsKOT)
+                    {
+                        var remaining = t.totalQuantity - (t.Readyquantity ?? 0);
+                        @if (Model.StateForPartial == 1 && remaining == 0)
+                        {
+                            remaining = t.totalQuantity;
+                        }
+                        else if (Model.StateForPartial == 2 && remaining != 0)
+                        {
+                            remaining = t.Readyquantity;
+                        }
+                        else if (Model.StateForPartial == 2 && remaining == 0)
+                        {
+                            remaining = t.totalQuantity;
+                        }
+                        <div class="d-flex justify-content-between">
+                            <span class="fw-bold">@t.itemName </span>
+                            <span>@remaining </span>
+                        </div>
+
+                        @if (t.ModifierKOT != null && t.ModifierKOT.Any())
+                        {
+                            @foreach (var m in t.ModifierKOT)
+                            {
+                                <i class="bi bi-dot"></i> <span>@m.modifierName</span> <br>
+
+                            }
+                        }
+
+                        <span class="text-blue">Instruction : </span>
+                        <span>@t.specialMessage </span>
+
+                    }
+                }
+            </div>
+            <div class="card-footer text-body-secondary">
+
+
+                <span class="text-blue">Order Instruction : </span>
+                <span>@i.Ordermessage </span>
+
+
+            </div>
+        </div>
+
+        
+    }
+}
+else
+{
+    <span>No KOT in process</span>
+}

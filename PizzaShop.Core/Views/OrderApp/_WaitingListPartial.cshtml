@@ -1,0 +1,59 @@
+@model PizzaShop.Repository.ModelView.OrderAppWaitingTokenViewModel
+
+@if (Model.waitingLists != null && Model.waitingLists.Any())
+{
+    <table class="table text-center text-nowrap">
+        <thead>
+            <tr>
+                <th>Token Number</th>
+                <th>Created At</th>
+                <th>Waiting Time</th>
+                <th>Name</th>
+                <th>No. of persons</th>
+                <th>Phone Number</th>
+                <th>Email</th>
+                <th>Action</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var waitingList in Model.waitingLists)
+            {
+                <tr>
+                    <td>@waitingList.Waitingid</td>
+                    <td>@(waitingList.createdAt?.ToString("dd/MM/yyyy HH:mm") ?? "N/A")</td>
+                    <td>@(waitingList.createdAt.HasValue ? (DateTime.Now - waitingList.createdAt.Value).ToString(@"hh\:mm") : "N/A")</td>
+                    <td>@waitingList.Customername</td>
+                    <td>@waitingList.TotalPersons</td>
+                    <td>@waitingList.Customerphone</td>
+                    <td>@waitingList.Customeremail</td>
+                    <td class="d-flex justify-content-center align-items-center gap-2">
+                        <a class="editWaitingToken"
+                                data-waiting-id="@waitingList.Waitingid"
+                                data-customer-name="@waitingList.Customername" 
+                                data-total-persons="@waitingList.TotalPersons"
+                                data-customer-email="@waitingList.Customeremail"
+                                data-customer-phone="@waitingList.Customerphone"
+                                data-section-id="@waitingList.Sectionid"
+                                data-section-name="@waitingList.Sectionname"><i class="bi bi-pen" ></i></a>
+                        <a class="deleteWaitingToken" data-id="@waitingList.Waitingid"><i class="bi bi-trash"></i></a>
+                        <a class="assignTable" 
+                                data-waiting-id="@waitingList.Waitingid"
+                                data-customer-name="@waitingList.Customername" 
+                                data-total-persons="@waitingList.TotalPersons"
+                                data-customer-email="@waitingList.Customeremail"
+                                data-customer-phone="@waitingList.Customerphone"
+                                data-section-id="@waitingList.Sectionid"
+                                data-section-name="@waitingList.Sectionname"><i class="bi bi-person-add"></i></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="w-100 text-center text-secondary bg-white border rounded display-6  p-3 mx-5 mt-3">
+        <p>No waiting lists available.</p>
+    </div>
+}

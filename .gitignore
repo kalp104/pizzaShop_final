@@ -1,0 +1,75 @@
+# Visual Studio / IDE-specific
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+.vscode/
+.idea/
+*.csproj.user
+
+# Build output
+bin/
+obj/
+out/
+publish/
+
+# Dependency directories
+**/packages/
+**/node_modules/
+
+# NuGet packages
+*.nupkg
+!*.nupkg.metadata
+
+# ASP.NET Core specific
+appsettings.Development.json
+appsettings.Production.json
+*.log
+
+# Entity Framework Core migrations (optional: include if you want migrations in git)
+# Data/Migrations/*
+# *.db
+# *.sqlite
+
+# Sensitive files
+*.config
+*.pfx
+*.key
+*.pem
+.env
+secrets.json
+
+# Temporary files
+*.cache
+*.tmp
+*.temp
+*.bak
+*.swp
+*~
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# Testing
+*.trx
+*.coverage
+TestResults/
+
+# Documentation and miscellaneous
+# *.md
+# *.txt
+# *.pdf
+# *.doc
+# *.docx
+
+# Keep project files
+!*.csproj
+!*.sln
+!*.json  # Keep specific JSON files like appsettings.json
+!*.yml
+!*.yaml
+
+# Explicitly include wwwroot for JS, CSS, and images
+!wwwroot/
+!wwwroot/**/*

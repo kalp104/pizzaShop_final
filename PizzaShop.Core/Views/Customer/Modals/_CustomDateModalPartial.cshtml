@@ -1,0 +1,30 @@
+<div class="modal fade" id="CustomDates" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+    data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Custome</h1>
+                <button type="button" class="btn-close cloasing" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="d-flex gap-2">
+                    <div class="form-floating mb-3 w-50">
+                        <input type="date" class="form-control" id="FromDateInput" placeholder="DD-MM-YYYY">
+                        <label for="FromDateInput">From Date</label>
+                        <span class="text-danger" id="fromDateError"></span>
+                    </div>
+                    <div class="form-floating mb-2 w-50">
+                        <input type="date" class="form-control" id="ToDateInput" placeholder="DD-MM-YYYY">
+                        <label for="ToDateInput">To Date</label>
+                        <span class="text-danger" id="toDateError"></span>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-center w-100 gap-2">
+                    <button type="button" class="btn btn-primary mb-3" id="customdateSubmit">Submit</button>
+                    <button type="button" class="btn border-primary text-primary mb-3 ml-1 cloasing"
+                        data-bs-dismiss="modal" id="">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

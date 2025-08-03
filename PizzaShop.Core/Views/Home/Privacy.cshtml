@@ -1,0 +1,103 @@
+﻿@{
+    ViewData["Title"] = "403 ERROR";
+}
+<div class="bg-error d-flex flex-column justify-content-start align-items-center vw-100 vh-100">
+
+    <div class="mt-5 d-flex justify-content-center align-items-center pt-5">
+        <img src="~/images/logos/pizzashop_logo.png" width="100px" alt="">
+        <h1>PIZZASHOP</h1>
+    </div>
+    
+    <h1 style="margin-top: 200px;" class=" mt-6 text-primary display-1">@ViewData["Title"]</h1>
+
+    <h3> Access denied for the provided credentials</h3>
+
+
+</div>
+
+
+
+@* 
+
+// Role-Based Authentication Project with JWT Token stored in Cookies
+// Features: Admin, Account Manager, Chef Roles, Remember Me, Logout
+
+using DemoProj.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
+
+var builder = WebApplication.CreateBuilder(args);
+
+// Add services
+builder.Services.AddControllersWithViews();
+builder.Services.AddDbContext<PizzaShopContext>(options => options.UseSqlServer("Your_Connection_String"));
+builder.Services.AddAuthentication(options => {
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options => {
+    options.TokenValidationParameters = new TokenValidationParameters {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = "YourIssuer",
+        ValidAudience = "YourAudience",
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("Your_Secret_Key"))
+    };
+});
+builder.Services.AddAuthorization(options => {
+    options.AddPolicy("AdminOnly", policy => policy.RequireRole("Admin"));
+    options.AddPolicy("AccountManager", policy => policy.RequireRole("AccountManager"));
+    options.AddPolicy("Chef", policy => policy.RequireRole("Chef"));
+});
+
+var app = builder.Build();
+app.UseAuthentication();
+app.UseAuthorization();
+app.MapDefaultControllerRoute();
+app.Run();
+
+// AccountController
+public class AccountController : Controller {
+    private readonly PizzaShopContext _db;
+    public AccountController(PizzaShopContext db) {
+        _db = db;
+    }
+
+    public IActionResult Login() => View();
+
+    [HttpPost]
+    public IActionResult Login(Account obj, bool RememberMe) {
+        var user = _db.Accounts.FirstOrDefault(a => a.Email == obj.Email);
+        if (user != null && BCrypt.Net.BCrypt.Verify(obj.Password, user.Password)) {
+            var claims = new List<Claim> {
+                new Claim(ClaimTypes.Name, user.Email),
+                new Claim(ClaimTypes.Role, user.Role)
+            };
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("Your_Secret_Key"));
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            var token = new JwtSecurityToken("YourIssuer", "YourAudience", claims, expires: RememberMe ? DateTime.Now.AddDays(7) : DateTime.Now.AddMinutes(30), signingCredentials: creds);
+            var jwt = new JwtSecurityTokenHandler().WriteToken(token);
+            Response.Cookies.Append("AuthToken", jwt, new CookieOptions { HttpOnly = true, Expires = RememberMe ? DateTimeOffset.Now.AddDays(7) : DateTimeOffset.Now.AddMinutes(30) });
+            return RedirectToAction("Index", "Home");
+        }
+        ViewData["Error"] = "Invalid email or password.";
+        return View();
+    }
+
+    public IActionResult Logout() {
+        Response.Cookies.Delete("AuthToken");
+        return RedirectToAction("Login");
+    }
+}
+
+
+ *@

@@ -1,0 +1,73 @@
+@{
+    bool canEdit = ViewBag.permission[3].Canedit;
+    bool canDelete = ViewBag.permission[3].Candelete;
+}
+@model PizzaShop.Repository.ModelView.SectionsHelperViewModel
+
+<div class="p-2 overflow-auto" id="TableContainer" data-total-tables="@Model.TotalTables">
+    @if (Model.Tables != null && Model.Tables.Any())
+    {
+        <table class="table text-nowrap">
+            <thead>
+                <tr>
+                    <th><input class="form-check-input" type="checkbox" value="" id="selectAllCheckBoxTable"></th>
+                    <th class="">Name</th>
+                    <th class="text-center">Capacity</th>
+                    <th class="text-center">Status</th>
+                    <th class="text-end">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var i in Model.Tables)
+                {
+                    <tr>
+                        <td>
+                            <input class="form-check-input Table-checkbox" type="checkbox" name="selectedTableIds"
+                                   value="@i.Tableid" data-table-id="@i.Tableid">
+                        </td>
+                        <td class="">
+                            @i.Tablename
+                        </td>
+                        <td class="text-center">
+                            @i.Capacity
+                        </td>
+                        <td class="text-center">
+                            @if (i.Status == 1)
+                            {
+                                <span class="p-1 px-2 rounded-pill text-white bg-success">Available</span>
+                            }
+                            else
+                            {
+                                <span class="p-1 px-2 rounded-pill text-white bg-secondary">Occupied</span>
+                            }
+                        </td>
+                        <td class="text-end">
+                            @if (canEdit)
+                            {
+                                <a class="edit-table-link m-2 text-decoration-none" href="#" 
+                                   data-table-id="@i.Tableid" 
+                                   data-table-name="@i.Tablename"
+                                   data-table-capacity="@i.Capacity" 
+                                   data-table-status="@i.Status" 
+                                   data-section-id="@i.Sectionid"
+                                   data-section-name="@Model?.Sections?.FirstOrDefault(s => s.Sectionid == i.Sectionid)?.Sectionname">
+                                    <i class="bi bi-pen"></i>
+                                </a>
+                            }
+                            @if (canDelete)
+                            {
+                                <a href="#" class="delete-table-link" data-table-id="@i.Tableid">
+                                    <i class="bi bi-trash"></i>
+                                </a>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <div class="d-flex align-items-center justify-content-center">No Table Found</div>
+    }
+</div>

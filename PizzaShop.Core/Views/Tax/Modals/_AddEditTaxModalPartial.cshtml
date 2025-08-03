@@ -1,0 +1,62 @@
+@using static PizzaShop.Repository.Helpers.Enums
+@model PizzaShop.Repository.ModelView.TaxHelperViewModel
+@* Add/Edit Tax Modal *@
+<div class="modal fade" id="taxModal" tabindex="-1" aria-labelledby="taxModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="taxModalLabel">Add/Edit Tax</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post" id="taxForm">
+                    <input type="hidden" id="TaxId" name="Taxid" asp-for="Taxid" />
+                    <input type="hidden" name="Userid" value="@ViewBag.UserId">
+
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="TaxName" name="Taxname" asp-for="Taxname"
+                            placeholder="Name">
+                        <label for="TaxName">Tax Name</label>
+                        <span asp-validation-for="Taxname" class="text-danger"></span>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-floating mb-3 col-6">
+                            <select class="form-select" id="taxType" name="Taxtype" asp-for="Taxtype" placeholder="Select Tax type"
+                                asp-items="Html.GetEnumSelectList<TaxTypes>()">
+                            </select>
+                            <label for="taxType" class="mx-2">Tax Type</label>
+                            <span asp-validation-for="Taxtype" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-floating mb-3 col-6">
+                            <input type="text" class="form-control pe-2" id="TaxAmount" name="Taxamount"
+                                asp-for="Taxamount" placeholder="Amount">
+                            <label for="TaxAmount" class="mx-2">Amount</label>
+                            <span asp-validation-for="Taxamount" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-floating mb-3 d-flex ">
+                        <div class="form-check form-switch text-center d-flex justify-content-center align-items-center">
+                            <input class="form-check-input me-2" id="Isenabled" name="Isenabled" asp-for="Isenabled"
+                                type="checkbox" />
+                            <label class="mt-2 me-3">IsEnabled</label>
+                        </div>
+                        <div class="form-check form-switch text-center d-flex justify-content-center align-items-center">
+                            <input class="form-check-input me-2" id="Isdefault" name="Isdefault" asp-for="Isdefault"
+                                type="checkbox" />
+                            <label class="mt-2">IsDefault</label>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" id="saveTaxBtn">Save</button>
+                        <button type="button" class="btn border-primary text-primary"
+                            data-bs-dismiss="modal">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,20 @@
+@using static PizzaShop.Repository.Helpers.Enums
+@{
+    Layout = "~/Views/Shared/_Dashboard.cshtml";
+}
+
+
+<div>
+    <div id="Show_EventListPartial">
+         <partial name="_EventListPartial"/>
+    </div>
+    <div id="show_AddEventPartial">
+         <partial name="_AddEventPartial"/>
+    </div>
+</div>
+
+
+@section scripts{
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="~/js/event_Scripts.js"></script>
+}

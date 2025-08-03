@@ -1,0 +1,114 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+@model PizzaShop.Repository.ModelView.LoginViewModel
+@{
+    @* ViewData["Title"] = "Home Page"; *@
+
+}
+
+<div class="main">
+    <!-- background image -->
+    <div class="imageclass">
+        <img src="~/images/dominos_background.jpg" alt="">
+    </div>
+
+
+    <!-- main login  -->
+    <div class="formclass">
+        <div class="mainformclass">
+            <h1 class="h1class"> <img src="~/images/logos/pizzashop_logo.png" alt="" height="50px">PIZZASHOP</h1>
+
+
+            <div class="innerformclass">
+
+                <form class="inputlogin" method="Post">
+                    <div class="m-3">
+                        <h3>Welcome,</h3>
+                        <div class=" has-validation my-2">
+                            <input type="text" asp-for="Email" class="form-control is-valid"
+                                id="validationServerUsername"
+                                aria-describedby="inputGroupPrepend3 validationServerUsernameFeedback"
+                                placeholder="Email">
+                            <span asp-validation-for="Email" class="text-danger" ></span>
+                        </div>
+
+                        <div class="has-validation my-2 ">
+                            <div class="position-relative password-section">
+                                <input type="password" asp-for="Password" class="form-control"
+                                    id="exampleInputPassword4" placeholder="password">
+                                <div class="eye" onclick="eyeActive3()">
+                                    <i class="bi bi-eye openeye3 eye inactive"></i>
+                                    <i class="bi bi-eye-slash closeeye3 eye active"></i>
+                                </div>
+                            </div>
+
+                            <span class="text-danger" asp-validation-for="Password" >@TempData["EmailWrong"]</span>
+                        </div>
+
+                    </div>
+                    <div class=" form-check d-flex m-3">
+                        <div class="input-group ">
+                            <input asp-for="Rememberme" type="checkbox" class="form-check-input" id="exampleCheck1">
+                            <label class="form-check-label " for="exampleCheck1">Remember Me</label>
+                        </div>
+                        <a asp-action="ForgetPassword" asp-controller="Home"
+                            class="forgotPass d-flex flex-nowrap ">Forgot Password?</a>
+                    </div>
+                    <div class="m-3">
+                        <button type="submit" class="loginButton d-flex justify-content-center">
+                            <span class="login">Login</span>
+                            <span class="loader2 " style="width: 20px; height: 20px;"></span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(".login").show();
+            $(".loader2").hide();
+            toastr.options.closeButton = true;
+            // Error message
+            var errorMessage = "@TempData["Error"]";
+            if (errorMessage) {
+                toastr.error(errorMessage, 'Error', { timeOut: 3000 });
+            }
+
+            $(document).on('submit', '.inputlogin', function () {
+                $(".login").hide();
+                $(".loader2").show();
+            });
+
+
+            var logout = '@TempData["logout"]';
+            if (logout) {
+                toastr.success(logout, 'success', { timeOut: 3000 });
+            }
+            // On every keystroke
+            $("#validationServerUsername").on('input', function () {
+                var email = $(this).val();
+                console.log(email);
+                // Send AJAX request to the controller
+                $.ajax({
+                    url: '/Home/UpdateEmail',
+                    type: 'POST',
+                    data: { email: email },
+                    success: function (data) {
+                        console.log("Email updated successfully");
+                    }
+                });
+            });
+
+
+        });
+    </script>
+    <script src="~/js/site_script.js" asp-append-version="true"></script>
+
+}

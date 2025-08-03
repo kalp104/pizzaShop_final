@@ -1,0 +1,94 @@
+@using static PizzaShop.Repository.Helpers.Enums
+@{
+    Layout = "~/Views/Shared/_Dashboard.cshtml";
+    bool canEdit = ViewBag.permission[6].Canedit;
+    bool canDelete = ViewBag.permission[6].Candelete;
+}
+
+<div class="pt-4 px-3 d-flex flex-column justify-content-between flex-sm-column flex-md-row flex-wrap">
+    <h3 class="text-blue">Orders</h3>
+    <div class="d-flex gap-3 justify-content-end flex-column flex-sm-column flex-md-row flex-wrap">
+        <div class="position-relative bg-white border border-1 rounded">
+            <input type="text" name="" placeholder="Search" class="search_bar" id="search_tax">
+            <img src="~/images/search-icon.svg" width="20px" class="search_bar_img">
+        </div>
+        <div class="datesInput d-flex gap-3 justify-content-end">
+            <select class="form-select" aria-label="Order Status" id="orderStatusFilter"
+                asp-items="Html.GetEnumSelectList<OrderStatus>()">
+                <option value="">All Statuses</option>
+            </select>
+            <select class="form-select" aria-label="Date Range" id="dateRangeFilter"
+                asp-items="Html.GetEnumSelectList<DateRange>()">
+                <option value="">All Dates</option>
+            </select>
+        </div>
+        <a style="cursor:pointer;" class="text-decoration-none bg-blue d-flex justify-content-center align-items-center p-2 rounded text-white"
+            id="exportBtn">
+            <i class="bi bi-box-arrow-up-right px-1"></i>
+            <span class="spinner-border spinner-border-sm text-white d-none" id="exportLoader" role="status"
+                aria-hidden="true"></span>
+            <span class="spanClass text-white" >Export</span>
+        </a>
+    </div>
+</div>
+
+
+<div class="pt-4 px-3 d-flex flex-column justify-content-end flex-sm-column flex-md-row flex-wrap">
+    <div class="gap-3 d-flex flex-column justify-content-end flex-sm-column flex-md-row flex-lg-row flex-wrap">
+        <div class="form-floating mb-3">
+            <input type="date" class="form-control" id="FromDateInput" placeholder="DD-MM-YYYY">
+            <label for="FromDateInput">From Date</label>
+            <span class="text-danger" id="fromDateError"></span>
+        </div>
+        <div class="form-floating mb-2">
+            <input type="date" class="form-control" id="ToDateInput" placeholder="DD-MM-YYYY">
+            <label for="ToDateInput">To Date</label>
+            <span class="text-danger" id="toDateError"></span>
+        </div>
+        <div class="d-flex gap-3">
+            <button type="button" class="btn btn-primary mb-3" style=" width: 50%;" id="searchBtn">Search</button>
+            <button type="button" class="btn border-primary text-primary mb-3 ml-1" style=" width: 50%;"
+                id="clearBtn">Clear</button>
+        </div>
+    </div>
+</div>
+
+<div class="mx-3 px-3 bg-white border rounded">
+    <div id="OrderContainer"></div>
+    <!-- Pagination Controls -->
+    <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-end align-items-center px-2 d-lg-flex d-sm-flex gap-2">
+            <div class="d-flex align-items-center mb-1 mt-2">
+                <span>Items per page:   </span>
+                <div class="custom-dropdown">
+                    <button class="btn border" type="button" id="itemsPerPageBtn">
+                        5 <span><i class="bi bi-chevron-down"></i></span>
+                    </button>
+                    <div class="custom-dropdown-menu" id="itemsPerPageMenu" style="display: none;">
+                        <div class="page-size-option" data-size="5">5</div>
+                        <div class="page-size-option" data-size="10">10</div>
+                        <div class="page-size-option" data-size="15">15</div>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex align-items-center mb-1 mt-2 gap-2">
+                <span id="pagination-info">Showing 1-5 of 0</span>
+                <li class="page-item">
+                    <a class="page-link" id="prevPage" href="#">
+                        < </a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" id="nextPage" href="#"> > </a>
+                </li>
+            </div>
+        </ul>
+    </nav>
+</div>
+
+@section scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="~/js/Orders_script.js"></script>
+    <script>
+        
+    </script>
+}

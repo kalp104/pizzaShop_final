@@ -1,0 +1,95 @@
+@{
+    Layout = "~/Views/Shared/_Dashboard.cshtml";
+}
+@model List<PizzaShop.Repository.ModelView.RolePermissionModelView>
+
+<div class="py-4 px-3 d-flex justify-content-between">
+    <h3 class="text-blue">Permissions</h3>
+    <div class="d-flex justify-content-between">
+        <a asp-action="Role"
+            class="text-decoration-none d-flex justify-content-center align-items-center p-2 border rounded text-black-50">
+            <i class="bi bi-chevron-left"></i> Back
+        </a>
+    </div>
+</div>
+
+<div class="bg-white border rounded p-4 mx-3">
+    <div id="collapse1" class="tabularData">
+        <div class="col-sm-12 col-md-6 col-lg-4">
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="floatingInput" value="@ViewBag.Rolename" disabled>
+                <label for="floatingInput">Role</label>
+            </div>
+        </div>
+        <form asp-action="UpdatePermission" asp-controller="Role" method="post" id="permissionForm">
+            <div class="p-2">
+                <table class="table">
+                    <thead class="text-nowrap">
+                        <th>
+                            <div class="d-flex gap-2 align-items-center">
+                                <a class="border border-primary rounded p-2" id="mainCheckBox">
+                                    <i class="bi bi-dash fw-bold"></i>
+                                </a>
+                                <div>Permission</div>
+                            </div>
+                        </th>
+                        <th>Can View</th>
+                        <th>Can Add/Edit</th>
+                        <th>Can Delete</th>
+                    </thead>
+                    <tbody class="text-nowrap" id="collapseExample">
+                        @for (int i = 0; i < Model.Count; i++)
+                        {
+                            bool isDisabled = Model[i].RoleId == 3 && Model[i].PermissionId == 2;
+                            <tr>
+                                <td>
+                                    <input class="form-check-input checkboxes" type="checkbox" value=""
+                                           @(Model[i].Canview || Model[i].Canedit || Model[i].Candelete ? "checked" : "")
+                                           id="flexCheckDefault_@i" @(isDisabled ? "disabled" : "")>
+                                    <label class="form-check-label" for="flexCheckDefault_@i">
+                                        @Model[i].PermissionName
+                                    </label>
+                                    <input type="hidden" asp-for="@Model[i].RoleId" />
+                                    <input type="hidden" asp-for="@Model[i].PermissionId" />
+                                </td>
+                                <td>
+                                    <div class="form-check form-switch">
+                                        <input disabled=@isDisabled class="form-check-input permission-switch can-view" type="checkbox" role="switch"
+                                               id="canView_@i" asp-for="@Model[i].Canview">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-check form-switch">
+                                        <input disabled=@isDisabled class="form-check-input permission-switch can-edit" type="checkbox" role="switch"
+                                               id="canEdit_@i" asp-for="@Model[i].Canedit">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-check form-switch">
+                                        <input disabled=@isDisabled class="form-check-input permission-switch can-delete" type="checkbox" role="switch"
+                                               id="canDelete_@i" asp-for="@Model[i].Candelete">
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            @if (ViewBag.Save == true)
+            {
+                <div class="d-flex gap-2 justify-content-end">
+                    <button class="btn btn-primary" type="submit">Save</button>
+                    <a class="btn border-primary text-primary" asp-action="Role" asp-controller="Role">Cancel</a>
+                </div>
+            }
+        </form>
+    </div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    window.success = "@TempData["SuccessPermission"]";
+    window.error = "@TempData["ErrorPermission"]";
+</script>
+<script src="~/js/permission_script.js"></script>

@@ -1,0 +1,41 @@
+@using static PizzaShop.Repository.Helpers.Enums
+@model PizzaShop.Repository.ModelView.TaxHelperViewModel
+@{
+    Layout = "~/Views/Shared/_Dashboard.cshtml";
+    bool canEdit = ViewBag.permission[4].Canedit;
+    bool canDelete = ViewBag.permission[4].Candelete;
+}
+
+<div class="d-sm-flex flex-sm-column py-4 px-3 d-md-flex flex-md-row justify-content-between">
+    <h3 class="text-blue">Taxes/Fees</h3>
+    <div class="d-flex gap-3 justify-content-end">
+        <div class="position-relative bg-white border border-1 rounded">
+            <input type="text" name="" placeholder="Search" class="search_bar" id="search_tax">
+            <img src="~/images/search-icon.svg" width="20px" class="search_bar_img">
+        </div>
+        @if (canEdit == true)
+        {
+            <a class="text-decoration-none bg-blue d-flex justify-content-center align-items-center p-2 rounded text-white"
+                data-bs-toggle="modal" data-bs-target="#taxModal" id="addTaxBtn">
+                <i class="bi bi-plus-lg"></i>
+                <span class="spanClass text-white">New Tax</span>
+            </a>
+        }
+    </div>
+</div>
+
+<div class="p-3 mx-3 bg-white border rounded" id="TaxContainer"></div>
+
+@* add edit tax modal *@
+<partial name="~/Views/Tax/Modals/_AddEditTaxModalPartial.cshtml" model="Model"/>
+@* delete tax modal *@
+<partial name="~/Views/Tax/Modals/_DeleteTaxModalPartial.cshtml" model="Model"/>
+
+
+@section scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="~/lib/bootstrap/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/js/tax_script.js"></script>
+}

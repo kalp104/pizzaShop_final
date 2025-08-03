@@ -1,0 +1,278 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,396;1,396&display=swap");
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Roboto";
+  /* color: #3e3e3e; */
+}
+.error {
+  color: red;
+  font-size: 14px;
+}
+.field-validation-error {
+  color: red !important;
+  font-size: 14px;
+}
+
+.btn-link {
+  font-weight: 400;
+  color: #010916 !important;
+  text-decoration: underline;
+}
+a {
+  color: #010916 !important;
+  text-decoration: underline;
+}
+.main {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* image class background */
+
+.imageclass {
+  height: 100vh;
+  width: 50%;
+}
+
+.imageclass img {
+  width: 100%;
+  height: 100vh;
+  background-position: center;
+  object-fit: cover;
+}
+
+/* login form */
+.bg-error {
+  background-color: #d7eff7;
+}
+.formclass {
+  background-color: #d7eff7;
+  height: 100vh;
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#exampleInputEmail1 {
+  border-right: none;
+}
+
+.h1class {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 30px;
+  gap: 20px;
+}
+
+.mainformclass {
+  width: 70%;
+}
+
+.loginEmailImage {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+  border-bottom: 1px solid #3e3e3e25;
+  border-right: 1px solid #3e3e3e25;
+  border-top: 1px solid #3e3e3e25;
+}
+
+#exampleCheck1 {
+  margin-right: 10px;
+}
+
+.loginButton {
+  width: 100%;
+  padding: 10px 50px;
+  border-radius: 10px;
+  background-color: #0565a1;
+  color: #fafafa;
+  font-weight: 400;
+  border: none;
+  align-self: flex-start;
+}
+
+.resetPassButton {
+  width: 100%;
+  padding: 10px 50px;
+  border-radius: 10px;
+  background-color: #0565a1;
+  color: #fafafa;
+  font-weight: 400;
+  border: none;
+  align-self: flex-start;
+}
+
+.forgotPass {
+  text-wrap: nowrap;
+  font-size: 14px;
+  text-decoration: none;
+  text-align: center;
+  color: #000000;
+}
+
+.invalidEmail {
+  opacity: 0;
+  color: red;
+}
+
+#validationServerUsername {
+  border: none;
+  box-shadow: none;
+  border: 1px solid #929292;
+  background-image: url(../images/user-solid.svg);
+}
+
+#validationServerUsername:focus {
+  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+#validationServerUsernameFeedback {
+  opacity: 0;
+  color: red;
+}
+
+#validationServerPasswordFeedback {
+  opacity: 0;
+  color: red;
+}
+
+#validationServerPasswordFeedback1 {
+  opacity: 0;
+  color: red;
+}
+
+#exampleInputPassword1 {
+  border: none;
+  border: 1px solid #929292;
+}
+
+.password-section .bi-eye {
+  position: absolute;
+  top: 50%;
+  right: 15px;
+
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+.password-section .bi-eye-slash {
+  position: absolute;
+  top: 50%;
+  right: 15px;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+.active {
+  display: block;
+}
+
+.inactive {
+  display: none;
+}
+
+@media screen and (max-width: 1000px) {
+  .imageclass {
+    display: none;
+  }
+  .main {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .formclass {
+    width: 100%;
+    height: 100%;
+    background: url(../images/dominos_background.jpg) center center no-repeat;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .mainformclass {
+    background-color: #d7eff7;
+    padding: 30px;
+    border-radius: 30px;
+    width: 450px;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .mainformclass {
+    width: 330px;
+  }
+  .form-check-label {
+    font-size: 13px;
+  }
+  .forgotPass {
+    font-size: 13px;
+  }
+}
+
+.password-section .bi-eye {
+  position: absolute;
+  top: 50%;
+  right: 11px;
+  /* Adjust this value to control the icon's position */
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+.password-section .bi-eye-slash {
+  position: absolute;
+  top: 50%;
+  right: 11px;
+  /* Adjust this value to control the icon's position */
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+.active {
+  display: block;
+}
+
+.inactive {
+  display: none;
+}
+
+
+#loadingSpinner2{
+
+}
+
+.loader2 {
+  width: 28px;
+  height: 28px;
+  border: 5px solid #fff;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

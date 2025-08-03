@@ -1,0 +1,87 @@
+@model PizzaShop.Repository.ModelView.MenuWithItemsViewModel
+@{
+    bool canEdit = ViewBag.permission[2].Canedit;
+    bool canDelete = ViewBag.permission[2].Candelete;
+}
+<div class="p-2 overflow-auto overflow-lg-none" id="itemsContainer" data-total-items="@Model.TotalItems">
+    @if (Model.Items != null && Model.Items.Any())
+    {
+        <table class="table text-nowrap">
+            <thead>
+                <tr>
+                    <th><input class="form-check-input" type="checkbox" id="selectAllItemsCheckbox"></th>
+                    <th>Name</th>
+                    <th>Item Type</th>
+                    <th>Rate</th>
+                    <th>Quantity</th>
+                    <th>Available</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var i in Model.Items)
+                {
+                    <tr>
+                        <td><input class="form-check-input item-checkbox" type="checkbox" value="@i.Itemid" data-name="@i.Itemname"></td>
+                        <td>
+                            @if (string.IsNullOrEmpty(i.Imageid) || i.Imageid == "default")
+                            {
+                                <img src="~/images/dining-menu.png" class="rounded-circle" height="30px" width="30px" alt="">
+                            }
+                            else
+                            {
+                                <img src="@i.Imageid" class="rounded-circle" height="30px" width="30px" alt="">
+                            }
+                            @i.Itemname
+                        </td>
+                        <td>
+                            @if (i.Itemtype == 1)
+                            {
+                                <img src="~/images/icons/veg-icon.svg" class="mx-3" height="20px" alt="">
+                            }
+                            else if (i.Itemtype == 2)
+                            {
+                                <img src="~/images/icons/non-veg-icon.svg" class="mx-3" height="20px" alt="">
+                            }
+                            else
+                            {
+                                <img src="~/images/icons/vegan-icon.svg" class="mx-3" height="20px" alt="">
+                            }
+                        </td>
+                        <td>@i.Rate</td>
+                        <td>
+                            <div class="mx-3">@i.Quantity</div>
+                        </td>
+                        <td>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" role="switch" disabled
+                                       @(i.Isavailable == true ? "checked" : "") />
+                            </div>
+                        </td>
+                        <td class="">
+                            @if (canEdit)
+                            {
+                                <a class="mx-1 edit-item-link text-decoration-none"  data-item-id="@i.Itemid">
+                                    <i class="bi bi-pen"></i>
+                                </a>
+                            }
+                            @if (canDelete)
+                            {
+                                <a class="mx-1 delete-item-link" data-item-id="@i.Itemid">
+                                    <i class="bi bi-trash"></i>
+                                </a>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <div class="d-flex align-items-center justify-content-center">No Items Found</div>
+    }
+</div>
+
+
+ 

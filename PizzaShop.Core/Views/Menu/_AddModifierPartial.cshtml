@@ -1,0 +1,46 @@
+@* Views/Shared/_AddCategoryModal.cshtml *@
+@model PizzaShop.Repository.ModelView.MenuWithItemsViewModel
+
+<div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+    data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Add Modifier Group</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post" asp-action="AddModifierGroup" asp-controller="Menu">
+                    <input type="hidden" asp-for="Userid" value="@ViewBag.UserId">
+                    <div class="form-floating mb-3">
+                        <input asp-for="Modifiergroupname" type="text" class="form-control" id="floatingInput"
+                            placeholder="name">
+                        <label for="floatingInput">name</label>
+                        <span class="text-danger" asp-validation-for="Modifiergroupname"></span>
+                    </div>
+                    <div class="form-floating">
+                        <textarea class="form-control" asp-for="Modifiergroupdescription"
+                            placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
+                        <label for="floatingTextarea2">Description</label>
+                        <span class="text-danger" asp-validation-for="Modifiergroupdescription"></span>
+                    </div>
+                    <div class="py-4">
+                        <a class=" text-decoration-none text-primary">
+                            + Add exisisting modifiers
+                        </a>
+                    </div>
+
+                    @* ----------- add exisisting modifiers------------ *@
+                    
+
+                    <div class="float-end">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@* <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script> *@

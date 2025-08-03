@@ -1,0 +1,41 @@
+@model PizzaShop.Repository.ModelView.MenuWithItemsViewModel
+
+<div class="p-2" id="ModifiersContainer4" data-total-modifiers="@Model.TotalItems1">
+    @if (Model.Modifiers != null && Model.Modifiers.Any())
+    {
+        <table class="table text-nowrap">
+            <thead>
+                <tr>
+                    <th>
+                        @* <input class="form-check-input" type="checkbox" id="selectAllCheckboxEdit"> *@
+                    </th>
+                    <th>Name</th>
+                    <th>Unit</th>
+                    <th>Rate</th>
+                    <th>Quantity</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var i in Model.Modifiers)
+                {
+                    <tr>
+                        <td>
+                            <input type="checkbox" class="item-checkbox" value="@i.Modifierid" data-name="@i.Modifiername"
+                                id="modifier_@i.Modifierid">
+                        </td>
+                        <td>@i.Modifiername</td>
+                        <td>@i.Modifierunit</td>
+                        <td>@i.Modifierrate</td>
+                        <td>
+                            <div class="mx-3">@i.Modifierquantity</div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <div class="d-flex align-items-center justify-content-center">No Modifiers Found</div>
+    }
+</div>

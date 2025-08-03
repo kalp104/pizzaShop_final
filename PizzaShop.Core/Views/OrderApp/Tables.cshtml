@@ -1,0 +1,247 @@
+@model PizzaShop.Repository.ModelView.OrderAppTableViewModel
+
+@{
+    Layout = "~/Views/Shared/_OrderApp.cshtml";
+}
+
+<div class="py-4 px-2 px-md-5 d-flex flex-column flex-sm-row justify-content-between align-items-center">
+    <h3 class="text-blue ff-bold">Table View</h3>
+    <div class="d-flex">
+        <div class="w-100 gap-3 px-3 d-flex justify-content-end align-items-start"
+            style="height: 25px; font-size: 13px;">
+            <div class="text-nowrap"><i class="bi bi-circle-fill text-secondary"></i> <span>Available</span></div>
+            <div class="text-nowrap"><i class="bi bi-circle text-success fw-bold"></i> <span>Selected</span></div>
+            <div class="text-nowrap"><i class="bi bi-circle-fill text-success"></i> <span>Assigned</span></div>
+            <div class="text-nowrap"><i class="bi bi-circle-fill text-primary"></i> <span>Running</span></div>
+        </div>
+    </div>
+</div>
+
+
+<div class="px-2  " id="SectionContainer">
+    @if (Model.sections != null && Model.sections.Any())
+    {
+        @foreach (var s in Model.sections)
+        {
+            <div class="bg-white  px-3 px-sm-5 py-3 mt-3  border rounded-3 ">
+                <div class="d-flex justify-content-between align-items-center section-table-link">
+                    <div class="d-flex gap-2">
+                        <i class="bi bi-arrow-right-circle h4 text-blue mt-1"></i>
+                        <a class="text-decoration-none h5 text-blue mt-1 text-nowrap"> @s.Sectionname </a>
+                    </div>
+
+                    <div class="d-flex align-items-center flex-column flex-sm-row " style="font-size: 13px;">
+                        <div>
+                            @if (s.tables != null && s.tables.Any())
+                            {
+                                <i class="bi bi-circle-fill text-secondary"></i> <span>@s.Available</span>
+                                <i class="bi bi-circle-fill text-success"></i> <span>@s.Assigned</span>
+                                <i class="bi bi-circle-fill text-primary"></i> <span>@s.Running</span>
+                            }
+                        </div>
+                        <button class="btn text-blue border mx-2 WaitingTokenButton" data-section-id="@s.Sectionid"><i class="bi bi-plus"></i> Waiting
+                            Token</button>
+                    </div>
+
+                </div>
+
+
+                <div class="collapse section-table-container  ">
+                    <div >
+                        <div class="d-flex justify-content-center justify-content-sm-start flex-wrap gap-3 mt-3">
+                            @if (s.tables != null && s.tables.Any())
+                            {
+                                @foreach (var t in s.tables)
+                                {
+                                    <div data-table-id="@t.Tableid" data-table-status="@t.Status" data-section-id="@s.Sectionid" data-table-capacity="@t.TCapacity"
+                                        class="TableCardClass p-3 d-flex @(t.Status == 1 ? "Available" : t.Status == 2 ? "Assigned" : t.Status == 3 ? "Running" : "") ">
+                                        <div class="w-50 d-flex flex-column align-items-start">
+                                            <span class="">@t.Tablename</span> <br>
+                                            <span class=""><i class="bi bi-people"></i> <br /> @t.TCapacity</span> <br>
+                                        </div>
+                                        <div class="w-50 d-flex flex-column align-items-end">
+                                            @if (t.Amount != 0)
+                                            {
+                                                <span class="">₹ @t.Amount.ToString("F2")</span> <br>
+                                            }
+                                            @if (t.Status == 3)
+                                            {
+                                                <span class=""><i class="bi bi-stopwatch"></i> @t.OrderTime</span> <br>
+                                            }
+                                        </div>
+                                    </div>
+
+
+                                }
+                            }
+                        </div>
+                    </div>
+
+
+                    <div class="d-flex justify-content-end align-items-center mt-3">
+                        <button class="btn bg-blue text-white m-3 AssingTable" data-section-id="@s.Sectionid">Assign</button>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+</div>
+
+
+@* token modal *@
+<div class="modal fade" id="WaitingTokenModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+    data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Waiting Token Details</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form class="position-relative" method="post" asp-action="AddWaitingToken" asp-controller="OrderApp">
+                    <div class="form-floating mb-3">
+                        <input asp-for="Customeremail" type="text" class="form-control" id="EmailInputWaitingToken"
+                            placeholder="name">
+                        <label for="EmailInputWaitingToken">Email</label>
+                        <span class="text-danger" asp-validation-for="Customeremail"></span>
+
+                        <div class="bg-white border position-absolute customersDetails d-none"
+                            style="width: 100%; height:300px; z-index: 1000;"></div>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input class="form-control" asp-for="Customername" placeholder="Leave a comment here"
+                            id="CustomerNameWaitingToken"></input>
+                        <label for="CustomerNameWaitingToken">Name</label>
+                        <span class="text-danger" asp-validation-for="Customername"></span>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input class="form-control" asp-for="Customerphone" placeholder="Leave a comment here"
+                            id="CustomerPhoneWaitingToken"></input>
+                        <label for="CustomerPhoneWaitingToken">Phone</label>
+                        <span class="text-danger" asp-validation-for="Customerphone"></span>
+                    </div>
+                    <div class="d-flex mb-3 gap-2">
+                        <div class="form-floating w-50">
+                            <input class="form-control" asp-for="TotalPersons" placeholder="Leave a comment here"
+                                id="TotalPersonsCount"></input>
+                            <label for="floatingTextarea2">No. of Persons</label>
+                            <span class="text-danger" asp-validation-for="TotalPersons"></span>
+                        </div>
+                        <div class="form-floating w-50 ">
+                            <select class="form-select bg-gray no-focus" tabindex="-1" style="pointer-events: none;" aria-label="Order Status" id="FilterSectionAtWaitingToken"
+                                asp-for="Sectionid">
+                                <option value="">Select Section</option>
+                                @if (Model.sections != null && Model.sections.Any())
+                                {
+                                    @foreach (var s in Model.sections)
+                                    {
+                                        <option value="@s.Sectionid">@s.Sectionname</option>
+                                    }
+                                }
+                            </select>
+                            <label for="floatingTextarea2">Section</label>
+                            <span class="text-danger" asp-validation-for="Sectionid"></span>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                        <button type="button" class="btn text-blue border-primary"
+                            data-bs-dismiss="modal">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@* off canvas *@
+
+<div class="offcanvas offcanvas-end" tabindex="-1" id="TableOffCanvas" aria-labelledby="staticBackdropLabel"
+    aria-controls="staticBackdrop">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title text-blue" id="offcanvasExampleLabel">Waiting List</h5>
+        <button type="button" class="btn-close closeCanvas" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <div>
+            <div id="WaititngListContainer"></div>
+
+            <div>
+                <h5 class="text-blue">Customer Details</h5>
+                <form class="position-relative" id="AddCustomerForm" method="post" >
+                    <div class="form-floating mb-3">
+                        <input asp-for="Customeremail" id="EmailInput" type="text" class="form-control"
+                            id="floatingInput" placeholder="name">
+                        <label for="floatingInput">Email</label>
+                        <span class="text-danger" asp-validation-for="Customeremail"></span>
+                        <div class="bg-white border position-absolute customersDetails d-none"
+                            style="width: 100%; height:300px; z-index: 1000;"></div>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input class="form-control" id="CustomerName" asp-for="Customername"
+                            placeholder="Leave a comment here" id="floatingTextarea2"></input>
+                        <label for="floatingTextarea2">Name</label>
+                        <span class="text-danger" asp-validation-for="Customername"></span>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input class="form-control" id="CustomerPhone" asp-for="Customerphone"
+                            placeholder="Leave a comment here" id="floatingTextarea2"></input>
+                        <label for="floatingTextarea2">Phone</label>
+                        <span class="text-danger" asp-validation-for="Customerphone"></span>
+                    </div>
+                    <div class="d-flex mb-3 gap-2">
+                        <div class="form-floating w-50">
+                            <input class="form-control" id="TotalPersons" asp-for="TotalPersons"
+                                placeholder="Leave a comment here" id="floatingTextarea2"></input>
+                            <label for="floatingTextarea2">No. of Persons</label>
+                            <span class="text-danger" asp-validation-for="TotalPersons"></span>
+                        </div>
+                        <div class="form-floating w-50 ">
+                            <select class="form-select bg-gray no-focus" style="pointer-events: none;" tabindex="-1" aria-label="Order Status" id="orderStatusFilter"
+                                asp-for="Sectionid" aria-readonly="true" >
+                                <option selected value="" id="selectedOptionInCustomer">Select Section</option>
+                                @(Model.sections != null && Model.sections.Any())
+                                {
+                                @foreach (var s in Model.sections)
+                                {
+                                    <option value="@s.Sectionid">@s.Sectionname</option>
+                                }
+                                }
+                            </select>
+                            <label for="floatingTextarea2">Section</label>
+                            <span class="text-danger" asp-validation-for="Sectionid"></span>
+                        </div>
+                    </div>
+                    <input type="hidden" asp-for="tableIds" id="tableIds" value="" />
+                    <input type="hidden" asp-for="Waitingid" id="Waitingid" value="" />
+                    <div class="modal-footer">
+                        <button type="submit" id="offcanvasSaveBtn" class="btn btn-primary">Save</button>
+                        <button type="button" class="btn text-blue border-primary closeCanvas"
+                            data-bs-dismiss="offcanvas" aria-label="Close">Cancel</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+@section scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/js/table_script.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            toastr.options.closeButton = true;
+            var success = "@TempData["success"]";
+            if (success != null && success == "true") {
+                toastr.success("success", success, { setTimeout: 2000 });
+            }
+        }); 
+    </script>
+}

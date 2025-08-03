@@ -1,0 +1,105 @@
+@model PizzaShop.Repository.ModelView.User2FAViewModel
+
+<div class="main">
+    <!-- background image -->
+    <div class="imageclass">
+        <img src="~/images/dominos_background.jpg" alt="">
+    </div>
+
+    <!-- main reset password form -->
+    <div class="formclass">
+        <div class="mainformclass">
+            <h1 class="h1class">
+                <img src="~/images/logos/pizzashop_logo.png" alt="" height="50px">PIZZASHOP
+            </h1>
+
+            <div class="innerformclass">
+                <form id="User2FAAuthPostForm" method="post" asp-action="User2FAAuth" asp-controller="Home">
+                    <div class="my-3">
+                        <input asp-for="ToEmail" type="hidden" value="@Model.ToEmail" />
+                        <h3>Verify your Code</h3>
+                       
+                        <div class="position-relative password-section my-2">
+                            <input asp-for="Token" type="text" class="form-control" id="exampleInputPassword3" placeholder="Enter your code" >
+                        </div>
+                        <span asp-validation-for="Token" class="text-danger"></span>
+
+                        <!-- Error Message Display -->
+                        <div class="my-3">
+                            <h6 class="text-success">Time Remaining: <span id="countdown-timer"></span></h6>
+                        </div>
+                        <div class="text-danger problem">@TempData["ErrorMessage"]</div>
+                    </div>
+
+                    <div class="my-3">
+                        <button type="submit" class="resetPassButton">Submit</button>
+                    </div>
+
+                    <div class="d-flex justify-content-center">
+                        <a asp-controller="Home" asp-action="Index" class="text-decoration-none">Back to login</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts {
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Check if the error message is not empty
+            var successMessage = '@TempData["SuccessEmail"]';
+            var countdownTime = @ViewBag.CountdownTime;
+            var errorMessage = '@TempData["ErrorMessage"]';
+            if(successMessage) {
+                // Show the success message
+                toastr.success(successMessage, "Success", {
+                    closeButton: true,
+                    progressBar: true,
+                    positionClass: "toast-top-right",
+                    timeOut: "5000",
+                    extendedTimeOut: "1000"
+                });
+            }
+
+            if (errorMessage) {
+                // Show the error message
+                $('.problem').text(errorMessage);
+                toastr.error(errorMessage, "Error", {
+                    closeButton: true,
+                    progressBar: true,
+                    positionClass: "toast-top-right",
+                    timeOut: "5000",
+                    extendedTimeOut: "1000"
+                });
+            }
+
+
+        
+            function startCountdown() {
+                var timerInterval = setInterval(function () {
+                    var minutes = Math.floor(countdownTime / 60);
+                    var seconds = countdownTime % 60;
+
+                    // Format the time as MM:SS
+                    var formattedTime = minutes.toString().padStart(2, '0') + ":" + seconds.toString().padStart(2, '0');
+                    $('#countdown-timer').text(formattedTime);
+
+                    if (countdownTime <= 0) {
+                        clearInterval(timerInterval);
+                        $('#countdown-timer').text("Time's up!");
+                        // Optionally disable the form submission
+                        $('button[type="submit"]').prop('disabled', true);
+                    }
+
+                    countdownTime--;
+                }, 1000);
+            }
+
+            startCountdown();
+        });
+    </script>
+}

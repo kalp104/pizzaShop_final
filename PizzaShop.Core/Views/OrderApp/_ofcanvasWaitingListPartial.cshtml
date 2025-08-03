@@ -1,0 +1,36 @@
+@model PizzaShop.Repository.ModelView.OrderAppTableViewModel
+<table class="table text-center">
+    <thead>
+        <tr>
+            <th></th>
+            <th>Token No</th>
+            <th>Name</th>
+            <th>Persons</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.waitingList != null && Model.waitingList.Any())
+        {
+            @foreach (var w in Model.waitingList)
+            {
+                <tr>
+                    <td><input class="form-check-input selectWaitingToken" type="checkbox" style="border-radius:50%;"
+                            data-waiting-id="@w.Waitingid" data-customer-name="@w.Customername"
+                            data-total-persons="@w.TotalPersons" data-customer-email="@w.Customeremail"
+                            data-customer-phone="@w.Customerphone" data-section-id="@w.Sectionid"
+                            data-section-name="@w.Sectionname"></td>
+                    <td>@w.Waitingid</td>
+                    <td>@w.Customername</td>
+                    <td>@w.TotalPersons</td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="3" class="text-center">No Waiting List</td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,88 @@
+@using static PizzaShop.Repository.Helpers.Enums
+@model PizzaShop.Repository.ModelView.OrdersHelperModelView;
+@{
+    @* Layout = "~/Views/Shared/_Dashboard.cshtml"; *@
+    bool canEdit = ViewBag.permission[6].Canedit;
+    bool canDelete = ViewBag.permission[6].Candelete;
+}
+
+@if (Model.customershistory != null)
+{
+    <div>
+        <div class="d-flex gap-2">
+            <div class="w-50 ">
+                <div class="border d-flex justify-content-between rounded p-2 mb-2">
+                    <span>Name</span>
+                    <span id="CustomerName" class="fw-bold">@Model.customershistory.Customername</span>
+                </div>
+                <div class="border rounded p-2 mb-2 d-flex justify-content-between">
+                    <span>Mobile Number</span>
+                    <span id="CustomerNumber" class="fw-bold">@Model.customershistory.Customerphone</span>
+                </div>
+                <div class="border rounded p-2 mb-2 d-flex justify-content-between">
+                    <span>Max Order</span>
+                    <span id="CustomerMaxOrder" class="fw-bold">@Model.customershistory.MaxOrders</span>
+                </div>
+            </div>
+            <div class="w-50 ">
+                <div class="border rounded p-2 mb-2 d-flex justify-content-between">
+                    <span>Average Bill</span>
+                    <span id="CustomerAvgBill" class="fw-bold">@Model.customershistory.AvgBill.ToString("F2")</span>
+                </div>
+                <div class="border rounded p-2 mb-2 d-flex justify-content-between">
+                    <span>Comming Since </span>
+                    <span id="CustomerCommingSince" class="fw-bold">@Model.customershistory.Createdat</span>
+                </div>
+                <div class="border rounded p-2 mb-2 d-flex justify-content-between">
+                    <span>Visit</span>
+                    <span id="CustomerVisit" class="fw-bold">@Model.customershistory.totalOrders</span>
+                </div>
+            </div>
+        </div>
+        <div class="overflow-auto">
+            @if (Model.customershistory.OrderDetails != null && Model.customershistory.OrderDetails.Any())
+            {
+                <table class="table text-nowrap ">
+                    <thead>
+                        <tr>
+                            <th class="text-center">Order Date</th>
+                            <th class="text-center">Order Type</th>
+                            <th class="text-center ">Payment</th>
+                            <th class="text-center ">Item</th>
+                            <th class="text-center ">Ammount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var i in Model.customershistory.OrderDetails)
+                        {
+                            <tr class="">
+                                <td class="text-center">
+                                    @i.OrderDate?.Date.ToShortDateString()
+                                </td>
+                                <td class="text-center">
+                                    @((Ordertype)i.OrderType)
+                                </td>
+                                <td class="text-center">
+                                    @((PaymentMethod)i.Paymentmode)
+                                </td>
+                                <td class="text-center">
+                                    @(i.TotalOrderedITems == 0 ? "None" : i.TotalOrderedITems.ToString())
+                                </td>
+                                <td class="text-center">
+                                    @(i.amount == 0 ? "None" : i.amount.ToString())
+                                    
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <div class="d-flex align-items-center justify-content-center m-4">No Customer Found</div>
+            }
+        </div>
+    </div>
+
+}

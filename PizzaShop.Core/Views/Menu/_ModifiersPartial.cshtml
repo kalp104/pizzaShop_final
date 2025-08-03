@@ -1,0 +1,57 @@
+@using static PizzaShop.Repository.Helpers.Enums
+@model PizzaShop.Repository.ModelView.MenuWithItemsViewModel
+@{
+    bool canEdit = ViewBag.permission[2].Canedit;
+    bool canDelete = ViewBag.permission[2].Candelete;
+}
+
+<div class="p-2" id="ModifiersContainer" data-total-modifiers="@Model.TotalItems1">
+    @if (Model.Modifiers != null && Model.Modifiers.Any())
+    {
+        <table class="table text-nowrap">
+            <thead>
+                <tr>
+                    <th><input class="form-check-input" type="checkbox" id="selectAllModifiersCheckbox"></th>
+                    <th>Name</th>
+                    <th>Unit</th>
+                    <th>Rate</th>
+                    <th>Quantity</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var i in Model.Modifiers)
+                {
+                    <tr>
+                        <td><input class="form-check-input main-item-checkbox" type="checkbox" name="selectedModifierIds"
+                                value="@i.Modifierid" data-name="@i.Modifiername"></td>
+                        <td>@i.Modifiername</td>
+                        <td>@((Parameter)(i.Modifierunit ?? 5))</td>
+                        <td>@i.Modifierrate</td>
+                        <td>
+                            <div class="mx-3">@i.Modifierquantity</div>
+                        </td>
+                        <td class="d-flex gap-3">
+                            @if (canEdit)
+                            {
+                                <a class="edit-modifier-link bg-white text-decoration-none" id="EditModifierModal3" data-modifier-id="@i.Modifierid">
+                                    <i class="bi bi-pen"></i>
+                                </a>
+                            }
+                            @if (canDelete)
+                            {
+                                <a id="deleteModifiers3" class="delete-modifier-link" data-modifier-id="@i.Modifierid">
+                                    <i class="bi bi-trash"></i>
+                                </a>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <div class="d-flex align-items-center justify-content-center">No Modifiers Found</div>
+    }
+</div>

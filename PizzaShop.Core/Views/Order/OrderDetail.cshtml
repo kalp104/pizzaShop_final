@@ -1,0 +1,216 @@
+@using static PizzaShop.Repository.Helpers.Enums
+@model PizzaShop.Repository.ModelView.OrderDetailsHelperViewModel
+@{
+    Layout = "~/Views/Shared/_Dashboard.cshtml";
+    bool canEdit = ViewBag.permission[6].Canedit;
+    bool canDelete = ViewBag.permission[6].Candelete;
+    int count = 1;
+}
+
+<div class="w-100 px-0 px-lg-5 ">
+    <div class="d-flex align-item-center justify-content-center w-100 px-0 px-lg-5">
+        <div class="w-100">
+
+            <div class="pt-4 px-3 d-flex flex-row justify-content-between  flex-md-row flex-wrap">
+                <h3 class="text-blue">Order Details</h3>
+                <div class="d-flex justify-content-between">
+                    <a asp-action="Index" asp-controller="Order"
+                        class=" text-decoration-none d-flex justify-content-center align-items-center p-2 border rounded text-black-50">
+                        &lt; <span class="spanClass text-black-50" id="buttonContent">Back</span>
+                    </a>
+                </div>
+            </div>
+
+
+            <div class="bg-white m-3 p-3 border rounded shadow-sm ">
+                <div class="d-flex justify-content-between">
+                    <div class="d-flex flex-column flex-md-row gap-2 text-nowrap">
+                        <h2>Order Summary</h2>
+                        <p class="btn btn-secondary text-white">@((OrderStatus)Model.Status)</p>
+                    </div>
+
+                    <a class="text-decoration-none bg-blue d-flex justify-content-center align-items-center px-4 rounded text-white"
+                        id="exportPdfBtn" data-order-id="@Model.Orderid" style="height: 40px; cursor:pointer;">
+                        <i class="bi bi-box-arrow-up-right px-1"></i>
+                        <span class="spanClass text-white d-none d-md-flex">Export</span>
+                    </a>
+                </div>
+
+                <h6><b>Invoice Number :</b></h6>
+
+                <div class="d-flex gap-3">
+                    <p><B>Paid on :</B> @Model.Createdat</p>
+                    <p><B>Placed on :</B> @Model.Createdat</p>
+                    <p><B>Modified on :</B> @Model.Editedat</p>
+                    <p><B>Order Duration :</B> @Model.completedAtString</p>
+                </div>
+            </div>
+
+
+            <div class="m-3 d-flex flex-column flex-md-row gap-3 tablediv">
+                <div class="w-100 w-md-50 bg-white border rounded shadow-sm p-3 ">
+                    <div class="d-flex justify-content-between ">
+                        <h5 class="fw-bold"><i class="bi bi-people-fill "></i> Customer Details </h5>
+                    </div>
+                    <div class="d-flex flex-column overflow-sm-scroll overflow-auto text-nowrap">
+                        <span><B> Name :</B> @Model.Customername</span>
+                        <span><B> Phone :</B> @Model.Customerphone</span>
+                        <span><B>No. of Persons :</B> @Model.Totalpersons</span>
+                        <span><B> Email :</B> @Model.Customeremail</span>
+                    </div>
+                </div>
+                <div class="w-100 w-md-50 bg-white p-3 border rounded shadow-sm ">
+                    <div class="d-flex justify-content-between">
+                        <h5 class="fw-bold"><img src="~/images/icons/dinner-table.svg" height="20px" /> Table Details </h5>
+                    </div>
+                    <div class="d-flex flex-column overflow-sm-scroll overflow-auto text-nowrap">
+                        <span><B> Table :</B>
+                            @if (Model.Tables != null)
+                            {
+                                @foreach (var t in Model.Tables)
+                                {
+                                    @t.Tablename
+                                }
+                            }
+                            else
+                            {
+                                <span>N/A</span>
+                            }
+                        </span>
+                        <span><B> Secton :</B> @Model.Sectionname</span>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="m-3 p-3 d-flex flex-column gap-3 bg-white border shadow-sm">
+                <h5 class="fw-bold">Ordere Items</h5>
+
+                <div class="overflow-auto">
+                    <table class=" table text-center table-inverse table-responsive text-nowrap ">
+                    <thead class="thead-inverse ">
+                        <tr>
+                            <th>Sr. No.</th>
+                            <th class="text-start">Item</th>
+                            <th>Quantity</th>
+                            <th>Price</th>
+                            <th>Total Amount</th>
+                        </tr>
+                    </thead>
+                        <tbody class="">
+                            @if (Model.ItemAtOrder != null && Model.ItemAtOrder.Any())
+                            {
+                                @foreach (var i in Model.ItemAtOrder)
+                                {
+                                    <tr>
+                                        <td>@count @{count = count + 1;}</td>
+                                        <td class="text-start">@i.itemName <br>
+                                            @if (i.ModifierOrder != null && i.ModifierOrder.Any())
+                                            {
+                                                @foreach (var m in i.ModifierOrder)
+                                                {
+                                                    <span><i class="bi bi-dot"></i> @m.modifierName </span> <br/>
+                                                }
+                                            }
+                                        </td>
+                                        <td>@i.totalQuantity <br>
+                                            @if (i.ModifierOrder != null && i.ModifierOrder.Any())
+                                            {
+                                                @foreach (var m in i.ModifierOrder)
+                                                {
+                                                    <span> @i.totalQuantity </span> <br/>
+                                                }
+                                            }
+                                        </td>
+                                        <td>@((i.Rate??0m).ToString("F2")) <br>
+                                            @if (i.ModifierOrder != null && i.ModifierOrder.Any())
+                                            {
+                                                @foreach (var m in i.ModifierOrder)
+                                                {
+                                                    <span> @((m.modifierRate ?? 0m).ToString("F2")) </span> <br/>
+                                                }
+                                            }
+                                        </td>
+                                        <td>@{var totalItemRate = i.Rate * i.totalQuantity; Math.Round(totalItemRate ?? 0, 2);} @((totalItemRate??0m).ToString("F2")) <br>
+                                            @if (i.ModifierOrder != null && i.ModifierOrder.Any())
+                                            {
+                                                @foreach (var m in i.ModifierOrder)
+                                                {
+                                                    <span>
+                                                        @{var totalModifierRate = m.modifierRate * i.totalQuantity;
+                                                        Math.Round(totalModifierRate ?? 0, 2);
+                                                        } @((totalModifierRate??0m).ToString("F2"))
+                                                    </span> <br/>
+                                                }
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            else
+                        {
+                            <span>N/A</span>
+                        }   
+                        </tbody>
+                    </table>
+                </div>
+                <div class="w-100 d-flex justify-content-between flex-column-reverse flex-md-row gap-3">
+                    <div class="d-flex flex-column">
+                        <span class="fw-bold">Feedback</span>
+                        <span>Comment: @Model.FeedbackComment</span>
+                        <span>Ambience Rating: @Model.ambienceRating</span>
+                        <span>Food Rating: @Model.foodRating</span>
+                        <span>Service Rating: @Model.serviceRating</span>
+                        <span>Rating: @Model.Ratings</span>
+                        
+
+
+                    </div>
+                    <div class="TaxBox d-flex flex-column">
+                        <div class="d-flex justify-content-between ">
+                            <h5 class="">Sub Total</h5>
+                            <h5 id="">₹ @((Model.SubTotal).ToString("F2"))</h5>
+                        </div>
+                        <div class="w-100">
+                            @if(Model.TaxAmount !=null && Model.TaxAmount.Any())
+                            {
+                                @foreach(var i in Model.TaxAmount)
+                                {
+                                    <div class="w-100 d-flex justify-content-between">
+                                        <h6 class="">@i.TaxName</h6>
+                                        <h6 id="">₹ @((i.TaxAmount).ToString("F2"))</h6> 
+                                    </div>  
+                                }
+                            }
+                            
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <h5 class="">Total</h5>
+                            <h5 id="">₹ @((Model.Total).ToString("F2"))</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+
+        $(document).ready(function () {
+            toastr.options.closeButton = true;
+            $(document).on("click", "#exportPdfBtn", function (e) {
+                e.preventDefault();
+                var orderId = $(this).data("order-id");
+
+                window.location.href = "/Order/GenerateInvoice?orderId=" + orderId;
+
+                toastr.success("pdf invoice file downloaded successfully.", "Success", {
+                    timeOut: 3000,
+                });
+            });
+        });
+    </script>
+}

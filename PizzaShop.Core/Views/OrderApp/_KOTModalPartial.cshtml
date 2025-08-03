@@ -1,0 +1,85 @@
+@model PizzaShop.Repository.ModelView.OrderKOTViewModel
+
+@if (Model != null)
+{
+    <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Order ID: @Model.orderId</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="modal-body position-relative">
+        @if (Model.itemsKOT != null && Model.itemsKOT.Any())
+        {
+            <form id="kotForm">
+                <div class="d-flex justify-content-between  py-1">
+                    <span class="fw-bold text-success">Items</span>
+                    <span id="StatusNameLabel" class="fw-bold text-success">
+                        
+                    </span>
+                </div>
+                @foreach (var i in Model.itemsKOT)
+                { 
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div class="d-flex align-items-center">
+                            <div class="form-check me-2">
+                                <input class="form-check-input item-check" type="checkbox" 
+                                       data-order-item-mapping-id="@i.OrderItemMappingId" 
+                                       data-total="@i.totalQuantity" 
+                                       data-status="@Model.ModalStatus"
+                                       data-ready-quantity="@i.Readyquantity"/>
+                            </div>
+                            <h5 class="fw-bold mb-0">@i.itemName</h5>
+                        </div>
+                        <div class="quantity-control d-flex align-items-center">
+                            <button type="button" class="btn border border-primary decrease-btn me-2" 
+                                    data-order-item-mapping-id="@i.OrderItemMappingId">
+                                <i class="bi bi-dash-lg"></i>
+                            </button>
+                            <span class="quantity-unit" data-order-item-mapping-id="@i.OrderItemMappingId">
+                                @if(Model.ModalStatus == 1)
+                                {
+                                    @(i.Readyquantity ?? 0) 
+                                }
+                                else
+                                {
+                                    @( 0 )
+                                }
+                            </span>
+                            <button type="button" class="btn border border-primary increase-btn ms-2" 
+                                    data-order-item-mapping-id="@i.OrderItemMappingId" 
+                                    data-status="@Model.ModalStatus"
+                                    data-max="@i.totalQuantity" 
+                                    data-ready-quantity="@i.Readyquantity"
+                                    data-modal-status="@Model.ModalStatus"
+                                    >
+                                <i class="bi bi-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    @if (i.ModifierKOT?.Any() == true)
+                    {
+                        foreach (var m in i.ModifierKOT)
+                        {
+                            <span><i class="bi bi-dot"></i> @m.modifierName</span><br />
+                        }
+                    }
+                    <input type="hidden" name="orderItemMappingIds" value="@i.OrderItemMappingId"  />
+                    <input type="hidden" name="quantities[@i.OrderItemMappingId]" class="quantity-hidden" 
+                           value="@(i.Readyquantity ?? 0)" data-order-item-mapping-id="@i.OrderItemMappingId" />
+                }
+            </form>
+        }
+        else
+        {
+            <p>No items in progress for this order.</p>
+        }
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary mark-prepared-btn" 
+                data-order-id="@Model.orderId" data-modal-status="@Model.ModalStatus">Mark as Prepared</button>
+        <button type="button" class="btn border-primary text-primary" data-bs-dismiss="modal">Cancel</button>
+    </div>
+}
+else
+{
+    <span>No KOT in process</span>
+}

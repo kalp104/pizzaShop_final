@@ -1,0 +1,55 @@
+2025-05-26 09:22:57.844 +05:30 [WRN] Failed to determine the https port for redirect.
+2025-05-26 09:22:58.211 +05:30 [WRN] The temp data cookie .AspNetCore.Mvc.CookieTempDataProvider could not be loaded.
+System.Security.Cryptography.CryptographicException: The payload was invalid. For more information go to https://aka.ms/aspnet/dataprotectionwarning
+   at Microsoft.AspNetCore.DataProtection.Cng.CbcAuthenticatedEncryptor.DecryptImpl(Byte* pbCiphertext, UInt32 cbCiphertext, Byte* pbAdditionalAuthenticatedData, UInt32 cbAdditionalAuthenticatedData)
+   at Microsoft.AspNetCore.DataProtection.Cng.Internal.CngAuthenticatedEncryptorBase.Decrypt(ArraySegment`1 ciphertext, ArraySegment`1 additionalAuthenticatedData)
+   at Microsoft.AspNetCore.DataProtection.KeyManagement.KeyRingBasedDataProtector.UnprotectCore(Byte[] protectedData, Boolean allowOperationsOnRevokedKeys, UnprotectStatus& status)
+   at Microsoft.AspNetCore.DataProtection.KeyManagement.KeyRingBasedDataProtector.Unprotect(Byte[] protectedData)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.CookieTempDataProvider.LoadTempData(HttpContext context)
+2025-05-26 09:24:50.003 +05:30 [WRN] Invalid login attempt by Kingslayer@yopmail.com
+2025-05-26 09:34:48.313 +05:30 [WRN] Failed to determine the https port for redirect.
+2025-05-26 09:35:10.813 +05:30 [WRN] Invalid login attempt by tatva.pct117@yopmail.com
+2025-05-26 09:35:18.877 +05:30 [WRN] Invalid login attempt by tatva.pct117@yopmail.com
+2025-05-26 09:35:30.013 +05:30 [WRN] Invalid login attempt by tatva.pct117@yopmail.com
+2025-05-26 09:37:26.978 +05:30 [WRN] Failed to determine the https port for redirect.
+2025-05-26 09:39:53.090 +05:30 [WRN] Failed to determine the https port for redirect.
+2025-05-26 09:40:26.173 +05:30 [WRN] Failed to determine the https port for redirect.
+2025-05-26 09:40:26.411 +05:30 [ERR] An unhandled exception has occurred while executing the request.
+System.InvalidOperationException: The AuthorizationPolicy named: 'PublicAccess' was not found.
+   at Microsoft.AspNetCore.Authorization.AuthorizationPolicy.CombineAsync(IAuthorizationPolicyProvider policyProvider, IEnumerable`1 authorizeData, IEnumerable`1 policies)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.StatusCodePagesMiddleware.Invoke(HttpContext context)
+   at TokenMiddleware.Invoke(HttpContext context) in D:\pizzaXshop\PizzaShop.Core\Middleware\TokenMiddleware.cs:line 99
+   at Microsoft.AspNetCore.Session.SessionMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Session.SessionMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+2025-05-26 09:40:44.736 +05:30 [WRN] Failed to determine the https port for redirect.
+2025-05-26 10:16:45.307 +05:30 [WRN] Failed to determine the https port for redirect.
+2025-05-26 10:18:31.763 +05:30 [WRN] Failed to determine the https port for redirect.
+2025-05-26 10:27:49.573 +05:30 [WRN] Failed to determine the https port for redirect.
+2025-05-26 10:33:17.372 +05:30 [WRN] Failed to determine the https port for redirect.
+2025-05-26 10:42:23.446 +05:30 [WRN] Failed to determine the https port for redirect.
+2025-05-26 10:44:05.176 +05:30 [WRN] Failed to determine the https port for redirect.
+2025-05-26 10:55:50.622 +05:30 [WRN] Failed to determine the https port for redirect.
+2025-05-26 10:59:19.588 +05:30 [WRN] Failed to determine the https port for redirect.
+2025-05-26 11:01:56.432 +05:30 [WRN] Failed to determine the https port for redirect.
+2025-05-26 11:03:59.355 +05:30 [WRN] Failed to determine the https port for redirect.
+2025-05-26 11:11:52.901 +05:30 [WRN] Failed to determine the https port for redirect.
+2025-05-26 11:12:22.688 +05:30 [WRN] Invalid login attempt by jimmysnow@yopmail.com
+2025-05-26 11:25:26.664 +05:30 [WRN] Failed to determine the https port for redirect.
+2025-05-26 11:31:10.110 +05:30 [WRN] Failed to determine the https port for redirect.
+2025-05-26 11:35:44.019 +05:30 [WRN] Failed to determine the https port for redirect.
+2025-05-26 11:40:51.985 +05:30 [WRN] Failed to determine the https port for redirect.
+2025-05-26 11:44:40.679 +05:30 [WRN] Failed to determine the https port for redirect.
+2025-05-26 12:04:44.881 +05:30 [WRN] The temp data cookie .AspNetCore.Mvc.CookieTempDataProvider could not be loaded.
+System.Security.Cryptography.CryptographicException: The payload was invalid. For more information go to https://aka.ms/aspnet/dataprotectionwarning
+   at Microsoft.AspNetCore.DataProtection.Cng.CbcAuthenticatedEncryptor.DecryptImpl(Byte* pbCiphertext, UInt32 cbCiphertext, Byte* pbAdditionalAuthenticatedData, UInt32 cbAdditionalAuthenticatedData)
+   at Microsoft.AspNetCore.DataProtection.Cng.Internal.CngAuthenticatedEncryptorBase.Decrypt(ArraySegment`1 ciphertext, ArraySegment`1 additionalAuthenticatedData)
+   at Microsoft.AspNetCore.DataProtection.KeyManagement.KeyRingBasedDataProtector.UnprotectCore(Byte[] protectedData, Boolean allowOperationsOnRevokedKeys, UnprotectStatus& status)
+   at Microsoft.AspNetCore.DataProtection.KeyManagement.KeyRingBasedDataProtector.Unprotect(Byte[] protectedData)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.CookieTempDataProvider.LoadTempData(HttpContext context)
+2025-05-26 12:59:38.367 +05:30 [WRN] Failed to determine the https port for redirect.
+2025-05-26 13:00:45.073 +05:30 [WRN] Failed to determine the https port for redirect.
+2025-05-26 13:02:42.573 +05:30 [WRN] Failed to determine the https port for redirect.
+2025-05-26 13:07:32.932 +05:30 [WRN] Invalid login attempt by jimmysnow@yopmail.com

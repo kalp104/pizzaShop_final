@@ -1,0 +1,244 @@
+@{
+    Layout = "~/Views/Shared/_Dashboard.cshtml";
+}
+
+<div class="dashboardContent py-4 px-3 display-6">
+    <div class="d-flex pageTitle justify-content-between">
+        <h3 class="d-flex-inline text-blue"> Dashboard</h3>
+
+        <div class="d-flex gap-2 justify-content-center align-items-center flex-column-reverse flex-md-row">
+            <div id="CustomDateValues" class="fs-6 text-nowrap"></div>
+            <div class="dropdown">
+                <button style="width: 170px;" id="selectorText" class="text-decoration-none btn dropdown-toggle d-flex justify-content-between align-items-center  border bg-white " type="button"
+                    aria-haspopup="true" data-bs-toggle="dropdown" aria-expanded="false">
+                    Current month
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item border-bottom selector" data-value="1">Current month</a></li>
+                    <li><a class="dropdown-item border-bottom selector" data-value="2">Last 30 days</a></li>
+                    <li><a class="dropdown-item border-bottom selector" data-value="3">Last 7 days</a></li>
+                    <li><a class="dropdown-item border-bottom selector" data-value="4">Today</a></li>
+                    <li><a class="dropdown-item selector" data-value="5">Custom date</a></li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+    <div class="container  mx-0 mw-100 px-0 mt-3">
+        <div class="row g-4 ">
+            <div class="col-xxl-3 col-xl-6 col-lg-6 col-md-6 ">
+                <div class="bg-white  dashboardHeight align-items-end border rounding shadowing pb-3 ps-3 flex-row d-flex ">
+                    <div class="d-flex flex-column">
+                        <div class="Value fs-2 text-nowrap" id="totalSales">
+                            00.00
+                        </div>
+                        <div class="Total fs-6">
+                            Total Sales
+                        </div>
+                    </div>
+                    <div class="align-items-start justify-content-end d-flex w-100 h-100 p-3">
+                        <div class="d-flex align-items-center justify-content-center"
+                            style="border-radius: 50%; border: 1px solid lightgreen; height: 67px; width: 67px;">
+                            <div class="align-items-center justify-content-center d-flex"
+                                style="background-color: lightgreen; border-radius: 50%; height: 45px; width: 45px;">
+                                <img src="~/images/icons/total-sales.svg" alt="" class="object-fit-fill">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xxl-3 col-xl-6 col-lg-6 col-md-6">
+                <div class="bg-white dashboardHeight align-items-end border rounding shadowing pb-3 ps-3 flex-row d-flex ">
+                    <div class="d-flex flex-column w-50">
+                        <div class="Value fs-2" id="totalOrders">
+                            0
+                        </div>
+                        <div class="Total fs-6">
+                            Total Orders
+                        </div>
+                    </div>
+                    <div class="align-items-start justify-content-end d-flex w-100 h-100 p-3">
+                        <div class="d-flex align-items-center justify-content-center"
+                            style="border-radius: 50%; border: 1px solid rgb(185, 144, 238); height: 67px; width: 67px;">
+                            <div class="align-items-center justify-content-center d-flex"
+                                style="background-color: rgb(185, 144, 238); border-radius: 50%; height: 45px; width: 45px;">
+                                <img src="~/images/icons/total-orders.svg" alt="" class="object-fit-fill">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xxl-3 col-xl-6 col-lg-6 col-md-6">
+                <div class="bg-white dashboardHeight align-items-end border rounding shadowing pb-3 ps-3 flex-row d-flex ">
+                    <div class="d-flex flex-column w-50">
+                        <div class="Value fs-2 text-nowrap" id="avgOrderValue">
+                            00.00
+                        </div>
+                        <div class="Total fs-6">
+                            Avg. Order Value
+                        </div>
+                    </div>
+                    <div class="align-items-start justify-content-end d-flex w-100 h-100 p-3">
+                        <div class="d-flex align-items-center justify-content-center"
+                            style="border-radius: 50%; border: 1px solid rgb(144, 166, 238); height: 67px; width: 67px;">
+                            <div class="align-items-center justify-content-center d-flex"
+                                style="background-color:  rgb(144, 166, 238); border-radius: 50%; height: 45px; width: 45px;">
+                                <img src="~/images/icons/order-value.svg" alt="" class="object-fit-fill">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xxl-3 col-xl-6 col-lg-6 col-md-6">
+                <div class="bg-white dashboardHeight align-items-end border rounding shadowing pb-3 ps-3 flex-row d-flex ">
+                    <div class="d-flex flex-column w-75">
+                        <div class="Value fs-5" id="avgWaitingTime">
+                            6.96 Min
+                        </div>
+                        <div class="Total fs-6">
+                            Avg. Waiting Time
+                        </div>
+                    </div>
+                    <div class="align-items-start justify-content-end d-flex w-100 h-100 p-3">
+                        <div class="d-flex align-items-center justify-content-center"
+                            style="border-radius: 50%; border: 1px solid rgb(238, 144, 144); height: 67px; width: 67px;">
+                            <div class="align-items-center justify-content-center d-flex"
+                                style="background-color: rgb(238, 144, 144); border-radius: 50%; height: 45px; width: 45px;">
+                                <img src="~/images/icons/waiting-time.svg" alt="" class="object-fit-fill">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container mx-0 mw-100 px-0 mt-3">
+        <div class="row">
+            <div class="col-md-6">
+                <div
+                    class="bg-white dashboardBoxHeight border pt-2 mb-3 ps-3 fs-4 rounding shadowing d-flex flex-column ">
+                    <h3>
+                        Revenue
+                    </h3>
+                    <div>
+                        <canvas id="RevenueChart" style="width:100%; height:300px; padding:0 13px 15px 0"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div
+                    class="bg-white dashboardBoxHeight border pt-2 mb-3 ps-3 fs-4 rounding shadowing d-flex flex-column ">
+                    <h3>
+                        Customer Growth
+                    </h3>
+                    <div>
+                        <canvas id="CustomerChart" style="width:100%; height:300px; padding:0 13px 15px 0"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container mx-0 mw-100 px-0 mt-3">
+        <div class="row g-4">
+            <div class="col-xxl-3 col-xl-6 col-lg-6 col-md-6">
+                <div
+                    class="bg-white TopAndLeastItemsHeight fs-4 pt-2 ps-3 border rounding shadowing d-flex flex-column  align-items-start justify-content-start ">
+                    <h3>Top Selling Items</h3>
+                    <div id="topItems"></div>
+                </div>
+            </div>
+            <div class="col-xxl-3 col-xl-6 col-lg-6 col-md-6">
+                <div class="bg-white TopAndLeastItemsHeight fs-4 pt-2 ps-3 border rounding shadowing d-flex flex-column align-items-start justify-content-start ">
+                    <h3>Least Selling Items</h3>
+                    <div id="lastItems" class></div>
+                </div>
+            </div>
+            <div class="col-xxl-3 col-xl-6 col-lg-6 col-md-6">
+                <div
+                    class="bg-white TopAndLeastItemsHeight align-items-end border rounding shadowing pb-3 ps-3 flex-row d-flex ">
+                    <div class="d-flex flex-column w-75">
+                        <div class="Value fs-2" id="waitingListCount">
+                            6
+                        </div>
+                        <div class="Total fs-6">
+                            Waiting List Count
+                        </div>
+                    </div>
+                    <div class="align-items-start justify-content-end d-flex w-100 h-100 p-3">
+                        <div class="d-flex align-items-center justify-content-center"
+                            style="border-radius: 50%; border: 1px solid darkgoldenrod; height: 65px; width: 65px;">
+                            <div class="align-items-center justify-content-center d-flex"
+                                style="background-color: darkgoldenrod; border-radius: 50%; height: 45px; width: 45px;">
+                                <img src="~/images/icons/waiting-list.svg" alt="" class="object-fit-fill">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xxl-3 col-xl-6 col-lg-6 col-md-6">
+                <div
+                    class="bg-white TopAndLeastItemsHeight align-items-end border rounding shadowing pb-3 ps-3 flex-row d-flex ">
+                    <div class="d-flex flex-column w-75">
+                        <div class="Value fs-2" id="newCustomerCount">
+                            696
+                        </div>
+                        <div class="Total fs-6">
+                            New Customer Count
+                        </div>
+                    </div>
+                    <div class="align-items-start justify-content-end d-flex w-100 h-100 p-3">
+                        <div class="d-flex align-items-center justify-content-center"
+                            style="border-radius: 50%; border: 1px solid rgb(250, 164, 114); height: 67px; width: 67px;">
+                            <div class="align-items-center justify-content-center d-flex"
+                                style="background-color:rgb(250, 164, 114); border-radius: 50%; height: 45px; width: 45px;">
+                                <img src="~/images/icons/customer.svg" alt="" class="object-fit-fill">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+@* custom date Modal *@
+
+<div class="modal fade" id="CustomDates" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+    data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Custome</h1>
+                <button type="button" class="btn-close cloasing" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="d-flex gap-2">
+                    <div class="form-floating mb-3 w-50">
+                        <input type="date" class="form-control" id="FromDateInput" placeholder="DD-MM-YYYY">
+                        <label for="FromDateInput">From Date</label>
+                        <span class="text-danger" id="fromDateError"></span>
+                    </div>
+                    <div class="form-floating mb-2 w-50">
+                        <input type="date" class="form-control" id="ToDateInput" placeholder="DD-MM-YYYY">
+                        <label for="ToDateInput">To Date</label>
+                        <span class="text-danger" id="toDateError"></span>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-center w-100 gap-2">
+                    <button type="button" class="btn btn-primary mb-3" id="customdateSubmit">Submit</button>
+                    <button type="button" class="btn border-primary text-primary mb-3 ml-1 cloasing" data-bs-dismiss="modal" id="">Cancel</button>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+<script src="~/js/dashBoard_script.js"></script>

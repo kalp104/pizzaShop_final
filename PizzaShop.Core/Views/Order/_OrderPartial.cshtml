@@ -1,0 +1,101 @@
+@using static PizzaShop.Repository.Helpers.Enums
+@model PizzaShop.Repository.ModelView.OrdersHelperModelView;
+@{
+    bool canEdit = ViewBag.permission[5].Canedit;
+    bool canDelete = ViewBag.permission[5].Candelete;
+
+}
+
+
+<div class="p-2 orderContainer overflow-auto" id="TableContainer" data-total-items="@Model.TotalItems">
+    @if (Model.orders != null && Model.orders.Any())
+    {
+        <table class="table text-nowrap ">
+            <thead>
+                <tr>
+                    <th class="text-center">#Order
+                        <button id="orderDescending" class="bg-transparent border-0"><i class="bi bi-arrow-up"></i></button>
+                        <button id="orderAscending" class="bg-transparent border-0"><i class="bi bi-arrow-down"></i></button>
+                    </th>
+                    <th class="text-center">Date
+                        <button id="dateDescending" class="bg-transparent border-0"><i class="bi bi-arrow-up"></i></button>
+                        <button id="dateAscending" class="bg-transparent border-0"><i class="bi bi-arrow-down"></i></button>
+                    </th>
+                    <th class="text-center">Customer
+                        <button id="nameDescending" class="bg-transparent border-0"><i class="bi bi-arrow-up"></i></button>
+                        <button id="nameAscending" class="bg-transparent border-0"><i class="bi bi-arrow-down"></i></button>
+                    </th>
+                    <th class="text-center ">Status</th>
+                    <th class="text-center ">Payment Mode</th>
+                    <th class="text-center ">Rating</th>
+                    <th class="text-center ">Total Amount
+                        <button id="amountDescending" class="bg-transparent border-0"><i class="bi bi-arrow-up"></i></button>
+                        <button id="amountAscending"  class="bg-transparent border-0"><i class="bi bi-arrow-down"></i></button>
+                    </th>
+
+                    <th class="text-center ">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var i in Model.orders)
+                {
+                    <tr>
+                        <td class="text-center">
+                            #@i.Orderid
+                        </td>
+                        <td class="text-center">
+                            @(i.Createdat?.Date.ToShortDateString() ?? "N/A")
+                        </td>
+                        <td class="text-center">
+                            @i.Customername
+                        </td>
+
+                        <td class="text-center">
+                            @((OrderStatus)i.Status)
+                        </td>
+                        <td class="text-center">
+                            @((PaymentMethod)i.Paymentmode)
+                        </td>
+                        <td class="text-center">
+                            @for (decimal j = 1; j <= 5; j += 1)
+                            {
+                                if (i.Ratings >= j)
+                                {
+                                    <i class="bi bi-star-fill text-warning"></i>
+                                }
+                                else if (i.Ratings > j - 1)
+                                {
+                                    <i class="bi bi-star-half text-warning"></i>
+                                }
+                                else
+                                {
+                                    <i class="bi bi-star text-warning"></i>
+                                }
+                            }
+                        </td>
+                        <td class="text-center">
+                            @i.Totalamount.ToString("F2")
+                        </td>
+
+                        <td class="text-center gap-2">
+
+                            <a data-order-id=@i.Orderid id="OrderDetailpdf">
+                                <i class="bi bi-file-earmark-break px-1"></i>
+                            </a>
+
+                            <a data-order-id=@i.Orderid id="OrderDetailEye">
+                                <i class="bi bi-eye px-1"></i>
+                            </a>
+
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <div class="d-flex align-items-center justify-content-center">No Orders Found</div>
+    }
+</div>

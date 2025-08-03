@@ -1,0 +1,81 @@
+@{
+    Layout = "~/Views/Shared/_Dashboard.cshtml";
+}
+@model PizzaShop.Repository.ModelView.MenuWithItemsViewModel
+<!-- all body code goes here -->
+<!-- menu code -->
+<div class="py-4 px-3 d-flex justify-content-between">
+    <h3 class="text-blue">Menu</h3>
+</div>
+<div class="maincontent">
+    <div class="formclass border rounded">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button"
+                    role="tab" aria-controls="home" onclick="window.location.hash='category'">
+                    <img src="~/images/icons/bars-solid.svg" height="20px" alt="">
+                    Items
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button"
+                    role="tab" aria-controls="profile" onclick="window.location.hash='modifiers'">
+                    <img src="~/images/icons/pen-to-square-solid.svg" height="20px" alt="">
+                    Modifiers
+                </button>
+            </li>
+        </ul>
+    </div>
+    <div class="formclass border rounded">
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                <div class="nav-home">
+                    @* CATEGORY PARTIAL VIEW *@
+                    <partial name="_CategoryPartial" model="Model"/>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                <div class="nav-home">
+                    @* MODIFIER PARTIAL VIEW *@
+                    <partial name="_ModifiersGroupPartial" model="Model" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        $(document).ready(function () {
+            toastr.options.closeButton = true;
+
+            // Handle toastr notifications from TempData
+            var CategoryAdd = '@TempData["CategoryAdd"]';
+            if (CategoryAdd) {
+                toastr.success(CategoryAdd, 'Success', { timeOut: 3000 });
+            }
+            var ModifierGroupAdd = '@TempData["ModifierGroupAdd"]';
+            if (ModifierGroupAdd) {
+                toastr.success(ModifierGroupAdd, 'Success', { timeOut: 3000 });
+            }
+            var SuccessMessage = '@TempData["SuccessMessage"]';
+            if (SuccessMessage) {
+                toastr.success(SuccessMessage, 'Success', { timeOut: 3000 });
+            }
+            var ErrorMessage = '@TempData["ErrorMessage"]';
+            if (ErrorMessage) {
+                toastr.error(ErrorMessage, 'Error', { timeOut: 3000 });
+            }
+
+            // Tab persistence using URL hash
+            var hash = window.location.hash;
+            if (hash === '#modifiers') {
+                $('#profile-tab').tab('show'); // Activate Modifiers tab
+            } else {
+                $('#home-tab').tab('show'); // Default to Category tab
+            }
+        });
+    </script>
+}
